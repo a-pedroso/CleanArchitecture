@@ -10,7 +10,7 @@ namespace CleanArchitecture.Infrastructure.Identity.Context
     public class IdentityContext : ApiAuthorizationDbContext<ApplicationUser>
     {
         public IdentityContext(
-            DbContextOptions options,
+            DbContextOptions<IdentityContext> options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) 
                 : base(options, operationalStoreOptions)
         {

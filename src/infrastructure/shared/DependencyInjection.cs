@@ -4,7 +4,7 @@ using CleanArchitecture.Infrastructure.Shared.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CleanArchitecture.Infrastructure
+namespace CleanArchitecture.Infrastructure.Shared
 {
     public static class DependencyInjection
     {

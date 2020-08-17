@@ -2,6 +2,7 @@
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.Infrastructure.Persistence.Repositories
@@ -19,5 +20,10 @@ namespace CleanArchitecture.Infrastructure.Persistence.Repositories
         {
             return await _todoList.AllAsync(p => p.Title != title);
         }
+
+        //public override Task<IReadOnlyList<TodoList>> GetAllAsync()
+        //{
+        //    return base.GetAllAsync();
+        //}
     }
 }

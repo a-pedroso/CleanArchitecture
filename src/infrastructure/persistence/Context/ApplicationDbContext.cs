@@ -17,7 +17,7 @@ namespace CleanArchitecture.Infrastructure.Persistence.Context
         private IDbContextTransaction _currentTransaction;
 
         public ApplicationDbContext(
-            DbContextOptions options,
+            DbContextOptions<ApplicationDbContext> options,
             ICurrentUserService currentUserService,
             IDateTime dateTime) : base(options)
         {

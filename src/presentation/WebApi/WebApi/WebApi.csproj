@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\application\Application.csproj" />
+    <ProjectReference Include="..\..\..\infrastructure\persistence\Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\..\..\infrastructure\shared\Infrastructure.Shared.csproj" />
+  </ItemGroup>
+
+
+</Project>

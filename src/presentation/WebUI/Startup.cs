@@ -1,10 +1,10 @@
 using CleanArchitecture.Application;
-using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Application.Common.Interfaces.Services;
 using CleanArchitecture.Infrastructure;
 using CleanArchitecture.Infrastructure.Identity.Context;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Persistence.Context;
+using CleanArchitecture.Infrastructure.Shared;
 using CleanArchitecture.WebUI.Filters;
 using CleanArchitecture.WebUI.Services;
 using Microsoft.AspNetCore.Builder;

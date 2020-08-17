@@ -11,6 +11,10 @@ namespace CleanArchitecture.Infrastructure.Persistence.Context.Configurations
             builder.Property(t => t.Title)
                 .HasMaxLength(200)
                 .IsRequired();
+
+            builder.HasOne(p => p.List)
+                   .WithMany(p => p.Items)
+                   .HasForeignKey(p => p.ListId);
         }
     }
 }
