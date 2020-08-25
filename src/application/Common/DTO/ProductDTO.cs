@@ -1,8 +1,8 @@
-﻿namespace CleanArchitecture.Application.Features.Products.Queries.GetAllProducts
+﻿namespace CleanArchitecture.Application.Common.DTO
 {
-    public class GetAllProductsViewModel
+    public class ProductDTO
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Barcode { get; set; }
         public string Description { get; set; }
