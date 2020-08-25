@@ -29,6 +29,9 @@ namespace CleanArchitecture.Infrastructure.Persistence.Context
 
         public DbSet<TodoItem> TodoItems { get; set; }
 
+        public DbSet<Product> Product { get; set; }
+
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach (var entry in ChangeTracker.Entries<IBaseAuditableEntity>())
