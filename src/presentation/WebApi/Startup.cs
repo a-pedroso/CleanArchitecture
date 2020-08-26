@@ -2,6 +2,7 @@ using CleanArchitecture.Application;
 using CleanArchitecture.Application.Common.Interfaces.Services;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Shared;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -36,7 +37,8 @@ namespace WebApi
 
             services.AddHttpContextAccessor();
 
-            services.AddControllers();
+            services.AddControllers()
+                    .AddFluentValidation();
 
             services.AddSwaggerGen(options =>
             {
