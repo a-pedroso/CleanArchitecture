@@ -1,6 +1,7 @@
 ## This solution is based on:
 
 Jason Taylor and Mukesh Murugan
+<br/>
 https://github.com/jasontaylordev/CleanArchitecture
 <br/>
 https://github.com/iammukeshm/CleanArchitecture.WebApi
