@@ -4,10 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanArchitecture.Infrastructure.Persistence.Context.Configurations
 {
-    public class TodoItemConfiguration : IEntityTypeConfiguration<TodoItem>
+    public class TodoItemConfiguration : BaseAuditableEntityConfiguration<TodoItem, int>
     {
-        public void Configure(EntityTypeBuilder<TodoItem> builder)
+        public override void Configure(EntityTypeBuilder<TodoItem> builder)
         {
+            base.Configure(builder);
+
             builder.Property(t => t.Title)
                 .HasMaxLength(200)
                 .IsRequired();

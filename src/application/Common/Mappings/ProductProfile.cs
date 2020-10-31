@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using CleanArchitecture.Application.Common.DTO;
 using CleanArchitecture.Application.Features.Products.Commands.CreateProduct;
-using CleanArchitecture.Application.Features.Products.Queries.GetAllProducts;
 using CleanArchitecture.Domain.Entities;
 
 namespace CleanArchitecture.Application.Common.Mappings
@@ -9,9 +9,8 @@ namespace CleanArchitecture.Application.Common.Mappings
     {
         public ProductProfile()
         {
-            CreateMap<Product, GetAllProductsViewModel>().ReverseMap();
+            CreateMap<Product, ProductDTO>().ReverseMap();
             CreateMap<CreateProductCommand, Product>();
-            CreateMap<GetAllProductsQuery, GetAllProductsParameter>();
         }
     }
 }
