@@ -2,20 +2,15 @@ using CleanArchitecture.Application;
 using CleanArchitecture.Application.Common.Interfaces.Services;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Shared;
-using FluentValidation.AspNetCore;
 using CleanArchitecture.WebApi.Helpers;
 using CleanArchitecture.WebApi.Services;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using System;
-using System.IO;
-using System.Reflection;
-using WebApi.Configuration;
-using WebApi.Services;
+using Serilog;
 
 namespace CleanArchitecture.WebApi
 {
@@ -41,7 +36,8 @@ namespace CleanArchitecture.WebApi
 
             services.AddHttpContextAccessor();
 
-            services.AddControllers().AddFluentValidation();
+            services.AddControllers()
+                    .AddFluentValidation();
 
             services.AddSwaggerExtension();
         }
