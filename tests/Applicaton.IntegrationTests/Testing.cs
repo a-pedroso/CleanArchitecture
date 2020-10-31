@@ -1,7 +1,7 @@
 ﻿using CleanArchitecture.Application.Common.Interfaces.Services;
 using CleanArchitecture.Infrastructure.Identity.Models;
 using CleanArchitecture.Infrastructure.Persistence.Context;
-using CleanArchitecture.WebUI;
+using CleanArchitecture.WebApi;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
