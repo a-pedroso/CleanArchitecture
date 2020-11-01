@@ -66,6 +66,8 @@ namespace CleanArchitecture.WebApi
 
             try
             {
+                //TODO: if DEV env ensure db migration
+
                 Log.Information($"web api starting at {DateTime.UtcNow}");
                 CreateHostBuilder(args).Build().Run();
             }
