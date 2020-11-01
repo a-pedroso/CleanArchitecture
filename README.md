@@ -22,5 +22,5 @@ https://github.com/iammukeshm/CleanArchitecture.WebApi
 This project is licensed with the [MIT license](LICENSE).
 
 ## Future work
-- [] Add JWT Auth and a simple IDP
-- [] Containerize WebApi
+- [ ] Add JWT Auth and a simple IDP
+- [ ] Containerize WebApi
