@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-namespace WebApi.Controllers
+namespace CleanArchitecture.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]

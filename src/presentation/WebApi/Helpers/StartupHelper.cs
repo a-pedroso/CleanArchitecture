@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
+﻿using CleanArchitecture.WebApi.Configuration;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
@@ -19,8 +19,8 @@ namespace CleanArchitecture.WebApi.Helpers
                     "v1",
                     new OpenApiInfo
                     {
-                        Title = "web-api clean arquitecture",
-                        Version = "v1",
+                        Title = ApiConfigurationConsts.ApiName,
+                        Version = ApiConfigurationConsts.ApiVersionV1,
                         Contact = new OpenApiContact
                         {
                             Name = "André Pedroso",
@@ -41,7 +41,7 @@ namespace CleanArchitecture.WebApi.Helpers
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "web-api clean arquitecture");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", ApiConfigurationConsts.ApiName);
             });
             return app;
         }

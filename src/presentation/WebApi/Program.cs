@@ -1,9 +1,14 @@
+using App.Metrics;
+using App.Metrics.AspNetCore;
+using App.Metrics.Formatters.Json;
+using App.Metrics.Formatters.Prometheus;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace CleanArchitecture.WebApi
 {
@@ -23,6 +28,29 @@ namespace CleanArchitecture.WebApi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureMetricsWithDefaults(builder =>
+                {
+                    builder.OutputMetrics.AsPrometheusPlainText();
+                    //builder.Report.ToConsole(TimeSpan.FromSeconds(5));
+                    //builder.Report.ToTextFile(
+                    //    options => {
+                    //        options.MetricsOutputFormatter = new MetricsJsonOutputFormatter();
+                    //        options.AppendMetricsToTextFile = false;
+                    //        options.FlushInterval = TimeSpan.FromSeconds(5);
+                    //        options.OutputPathAndFileName = @"Logs\metrics.txt";
+                    //    });
+                })
+                .UseMetrics(options =>
+                {
+                    options.EndpointOptions = endpointsOptions =>
+                    {
+                        endpointsOptions.MetricsTextEndpointOutputFormatter = 
+                            Metrics.Instance
+                                    .OutputMetricsFormatters
+                                    .OfType<MetricsPrometheusTextOutputFormatter>()
+                                    .First();
+                    };
+                })
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

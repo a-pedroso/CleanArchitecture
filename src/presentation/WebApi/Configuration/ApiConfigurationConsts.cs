@@ -1,4 +1,4 @@
-﻿namespace WebApi.Configuration
+﻿namespace CleanArchitecture.WebApi.Configuration
 {
     public static class ApiConfigurationConsts
     {
