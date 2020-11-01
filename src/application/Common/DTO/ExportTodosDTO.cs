@@ -1,6 +1,6 @@
-﻿namespace CleanArchitecture.Application.Features.TodoLists.Queries.ExportTodos
+﻿namespace CleanArchitecture.Application.Common.DTO
 {
-    public class ExportTodosVm
+    public class ExportTodosDTO
     {
         public string FileName { get; set; }
 

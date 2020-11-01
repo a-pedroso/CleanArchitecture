@@ -14,7 +14,13 @@ https://github.com/iammukeshm/CleanArchitecture.WebApi
 * Serilog
 * CQRS with MediatR
 * Fluent Validation
+* Health Checks
+* App.Metrics
 
 ## License
 
 This project is licensed with the [MIT license](LICENSE).
+
+## Future work
+- [] Add JWT Auth and a simple IDP
+- [] Containerize WebApi

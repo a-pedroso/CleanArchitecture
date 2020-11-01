@@ -9,8 +9,19 @@ namespace CleanArchitecture.Application.Common.Mappings
     {
         public ProductProfile()
         {
-            CreateMap<Product, ProductDTO>().ReverseMap();
-            CreateMap<CreateProductCommand, Product>();
+            CreateMap<Product, ProductDTO>()
+                .ReverseMap()
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ForMember(x => x.LastModified, opt => opt.Ignore())
+                .ForMember(x => x.LastModifiedBy, opt => opt.Ignore());
+
+            CreateMap<CreateProductCommand, Product>()
+                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ForMember(x => x.LastModified, opt => opt.Ignore())
+                .ForMember(x => x.LastModifiedBy, opt => opt.Ignore());
         }
     }
 }

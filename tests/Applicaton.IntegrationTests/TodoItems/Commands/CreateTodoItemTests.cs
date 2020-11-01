@@ -25,7 +25,7 @@ namespace CleanArchitecture.Application.IntegrationTests.TodoItems.Commands
         [Test]
         public async Task ShouldCreateTodoItem()
         {
-            var userId = await RunAsDefaultUserAsync();
+            var userId = RunAsDefaultUserAsync();
 
             var listId = await SendAsync(new CreateTodoListCommand
             {

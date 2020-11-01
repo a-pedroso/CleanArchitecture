@@ -30,7 +30,7 @@ namespace CleanArchitecture.Application.IntegrationTests.TodoItems.Commands
         [Test]
         public async Task ShouldUpdateTodoItem()
         {
-            var userId = await RunAsDefaultUserAsync();
+            var userId = RunAsDefaultUserAsync();
 
             var listId = await SendAsync(new CreateTodoListCommand
             {

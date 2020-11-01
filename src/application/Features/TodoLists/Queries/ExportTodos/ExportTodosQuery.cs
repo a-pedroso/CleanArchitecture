@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CleanArchitecture.Application.Common.DTO;
 using CleanArchitecture.Application.Common.Interfaces.Repositories;
 using CleanArchitecture.Application.Common.Interfaces.Services;
 using MediatR;
@@ -8,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Features.TodoLists.Queries.ExportTodos
 {
-    public class ExportTodosQuery : IRequest<ExportTodosVm>
+    public class ExportTodosQuery : IRequest<ExportTodosDTO>
     {
         public int ListId { get; set; }
     }
 
-    public class ExportTodosQueryHandler : IRequestHandler<ExportTodosQuery, ExportTodosVm>
+    public class ExportTodosQueryHandler : IRequestHandler<ExportTodosQuery, ExportTodosDTO>
     {
         private readonly ITodoItemRepositoryAsync _repo;
         private readonly IMapper _mapper;
@@ -26,13 +27,13 @@ namespace CleanArchitecture.Application.Features.TodoLists.Queries.ExportTodos
             _fileBuilder = fileBuilder;
         }
 
-        public async Task<ExportTodosVm> Handle(ExportTodosQuery request, CancellationToken cancellationToken)
+        public async Task<ExportTodosDTO> Handle(ExportTodosQuery request, CancellationToken cancellationToken)
         {
-            var vm = new ExportTodosVm();
+            var vm = new ExportTodosDTO();
 
             var records = await _repo.GetTodoItemsByListIdAsync(request.ListId);
 
-            IEnumerable<TodoItemRecord> result = _mapper.Map<IEnumerable<TodoItemRecord>>(records);
+            IEnumerable<ExportTodoItemFileRecordDTO> result = _mapper.Map<IEnumerable<ExportTodoItemFileRecordDTO>>(records);
 
             vm.Content = _fileBuilder.BuildTodoItemsFile(result);
             vm.ContentType = "text/csv";

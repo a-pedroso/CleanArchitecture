@@ -1,5 +1,5 @@
-﻿using CleanArchitecture.Application.Common.Interfaces.Services;
-using CleanArchitecture.Application.Features.TodoLists.Queries.ExportTodos;
+﻿using CleanArchitecture.Application.Common.DTO;
+using CleanArchitecture.Application.Common.Interfaces.Services;
 using CleanArchitecture.Infrastructure.Shared.Files.Maps;
 using CsvHelper;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace CleanArchitecture.Infrastructure.Shared.Files
 {
     public class CsvFileBuilder : ICsvFileBuilder
     {
-        public byte[] BuildTodoItemsFile(IEnumerable<TodoItemRecord> records)
+        public byte[] BuildTodoItemsFile(IEnumerable<ExportTodoItemFileRecordDTO> records)
         {
             using var memoryStream = new MemoryStream();
             using (var streamWriter = new StreamWriter(memoryStream))

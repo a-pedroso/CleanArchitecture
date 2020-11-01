@@ -1,10 +1,10 @@
-﻿using CleanArchitecture.Application.Features.TodoLists.Queries.ExportTodos;
+﻿using CleanArchitecture.Application.Common.DTO;
 using System.Collections.Generic;
 
 namespace CleanArchitecture.Application.Common.Interfaces.Services
 {
     public interface ICsvFileBuilder
     {
-        byte[] BuildTodoItemsFile(IEnumerable<TodoItemRecord> records);
+        byte[] BuildTodoItemsFile(IEnumerable<ExportTodoItemFileRecordDTO> records);
     }
 }

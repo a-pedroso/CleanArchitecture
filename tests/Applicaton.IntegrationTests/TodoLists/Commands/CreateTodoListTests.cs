@@ -41,7 +41,7 @@ namespace CleanArchitecture.Application.IntegrationTests.TodoLists.Commands
         [Test]
         public async Task ShouldCreateTodoList()
         {
-            var userId = await RunAsDefaultUserAsync();
+            var userId = RunAsDefaultUserAsync();
 
             var command = new CreateTodoListCommand
             {

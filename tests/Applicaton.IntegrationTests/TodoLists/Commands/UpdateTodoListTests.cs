@@ -54,7 +54,7 @@ namespace CleanArchitecture.Application.IntegrationTests.TodoLists.Commands
         [Test]
         public async Task ShouldUpdateTodoList()
         {
-            var userId = await RunAsDefaultUserAsync();
+            var userId = RunAsDefaultUserAsync();
 
             var listId = await SendAsync(new CreateTodoListCommand
             {

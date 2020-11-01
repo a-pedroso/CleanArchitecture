@@ -44,7 +44,7 @@ namespace CleanArchitecture.WebApi
             // CPU, memory & GC
             services.AddAppMetricsCollectors();
 
-            // For pushng reporters like console, file, influxDb, etc.
+            // For pushing metrics to reporters like console, file, influxDb, etc.
             //services.AddMetricsReportingHostedService();
 
             services.AddSwaggerExtension();

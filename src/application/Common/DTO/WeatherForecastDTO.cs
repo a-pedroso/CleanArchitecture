@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CleanArchitecture.Application.Common.DTO
 {
-    public class WeatherForecast
+    public class WeatherForecastDTO
     {
         public DateTime Date { get; set; }
 

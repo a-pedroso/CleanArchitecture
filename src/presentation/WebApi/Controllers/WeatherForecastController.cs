@@ -24,7 +24,7 @@ namespace CleanArchitecture.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<WeatherForecast>> Get()
+        public async Task<IEnumerable<WeatherForecastDTO>> Get()
         {
             _logger.LogDebug("getting WeatherForecast");
             return await _mediator.Send(new GetWeatherForecastsQuery());

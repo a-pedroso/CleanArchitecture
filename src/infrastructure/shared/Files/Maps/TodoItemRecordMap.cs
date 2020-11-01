@@ -1,10 +1,10 @@
-﻿using CleanArchitecture.Application.Features.TodoLists.Queries.ExportTodos;
+﻿using CleanArchitecture.Application.Common.DTO;
 using CsvHelper.Configuration;
 using System.Globalization;
 
 namespace CleanArchitecture.Infrastructure.Shared.Files.Maps
 {
-    public class TodoItemRecordMap : ClassMap<TodoItemRecord>
+    public class TodoItemRecordMap : ClassMap<ExportTodoItemFileRecordDTO>
     {
         public TodoItemRecordMap()
         {
