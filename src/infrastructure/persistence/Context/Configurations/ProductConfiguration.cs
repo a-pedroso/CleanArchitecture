@@ -23,6 +23,7 @@ namespace CleanArchitecture.Infrastructure.Persistence.Context.Configurations
                 .IsRequired();
 
             builder.Property(t => t.Rate)
+                .HasColumnType("decimal")
                 .HasDefaultValue(0)
                 .IsRequired();
         }

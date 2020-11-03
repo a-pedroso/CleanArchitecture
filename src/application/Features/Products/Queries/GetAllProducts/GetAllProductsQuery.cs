@@ -27,7 +27,7 @@ namespace CleanArchitecture.Application.Features.Products.Queries.GetAllProducts
         {
             var product = await _productRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize);
             var productViewModel = _mapper.Map<IEnumerable<ProductDTO>>(product);
-
+            
             return PagedResponse<IEnumerable<ProductDTO>>.Success(productViewModel, request.PageNumber, request.PageSize);
         }
     }

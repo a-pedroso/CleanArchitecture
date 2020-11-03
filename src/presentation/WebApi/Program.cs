@@ -2,13 +2,17 @@ using App.Metrics;
 using App.Metrics.AspNetCore;
 using App.Metrics.Formatters.Json;
 using App.Metrics.Formatters.Prometheus;
+using CleanArchitecture.Infrastructure.Persistence.Context;
+using CleanArchitecture.WebApi.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CleanArchitecture.WebApi
 {
@@ -57,7 +61,7 @@ namespace CleanArchitecture.WebApi
                     webBuilder.UseStartup<Startup>();
                 });
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(Configuration)
@@ -66,10 +70,19 @@ namespace CleanArchitecture.WebApi
 
             try
             {
-                //TODO: if DEV env ensure db migration
+                var host = CreateHostBuilder(args).Build();
+                
+                if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").Equals("Development"))
+                {
+                    using var serviceScope = host.Services.CreateScope();
+                    
+                    var services = serviceScope.ServiceProvider;
+                    using var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+                    await DbMigrationHelper<ApplicationDbContext>.EnsureDatabaseMigratedAsync(scope); 
+                }
 
                 Log.Information($"web api starting at {DateTime.UtcNow}");
-                CreateHostBuilder(args).Build().Run();
+                host.Run();
             }
             catch (Exception ex)
             {

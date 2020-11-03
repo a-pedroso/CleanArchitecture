@@ -4,6 +4,7 @@ using CleanArchitecture.Application.Features.Products.Commands.UpdateProduct;
 using CleanArchitecture.Application.Features.Products.Queries.GetAllProducts;
 using CleanArchitecture.Application.Features.Products.Queries.GetProductById;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace CleanArchitecture.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Produces("application/json")]
     public class ProductController : ControllerBase
     {
         private readonly ILogger<ProductController> _logger;
@@ -27,6 +29,7 @@ namespace CleanArchitecture.WebApi.Controllers
 
         // GET: /Product
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(int index, int size)
         {
             _logger.LogDebug($"Get Products. index:{index} size:{size} ");
@@ -34,7 +37,7 @@ namespace CleanArchitecture.WebApi.Controllers
             var qry = new GetAllProductsQuery()
             {
                 PageNumber = index + 1,
-                PageSize = size
+                PageSize = size < 1 ? 10 : size > 1000 ? 1000 : size
             };
 
             var response = await _mediator.Send(qry);
@@ -44,6 +47,7 @@ namespace CleanArchitecture.WebApi.Controllers
 
         // GET /Product/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(int id)
         {
             _logger.LogDebug($"Get Product {id}");

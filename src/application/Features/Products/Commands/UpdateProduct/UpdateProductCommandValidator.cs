@@ -1,10 +1,4 @@
-﻿using CleanArchitecture.Application.Common.Interfaces.Repositories;
-using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
 namespace CleanArchitecture.Application.Features.Products.Commands.UpdateProduct
 {
