@@ -21,9 +21,11 @@ namespace CleanArchitecture.Infrastructure.Persistence.Repositories
             return await _todoList.AllAsync(p => p.Title != title);
         }
 
-        //public override Task<IReadOnlyList<TodoList>> GetAllAsync()
-        //{
-        //    return base.GetAllAsync();
-        //}
+        public override async Task<IReadOnlyList<TodoList>> GetAllAsync()
+        {
+            return await _todoList.AsNoTracking()
+                                  .Include(f => f.Items)
+                                  .ToListAsync();
+        }
     }
 }

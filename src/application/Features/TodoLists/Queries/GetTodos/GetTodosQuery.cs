@@ -20,7 +20,9 @@ namespace CleanArchitecture.Application.Features.TodoLists.Queries.GetTodos
         private readonly ITodoListRepositoryAsync _repo;
         private readonly IMapper _mapper;
 
-        public GetTodosQueryHandler(ITodoListRepositoryAsync repo, IMapper mapper)
+        public GetTodosQueryHandler(
+            ITodoListRepositoryAsync repo,
+            IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;

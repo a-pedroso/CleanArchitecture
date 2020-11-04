@@ -25,6 +25,8 @@ public class Testing
     [OneTimeSetUp]
     public void RunBeforeAnyTests()
     {
+        _currentUserId = "mockuserid";
+
         var builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", true, true)
@@ -48,12 +50,11 @@ public class Testing
         // Remove existing registration
         var currentUserServiceDescriptor = services.FirstOrDefault(d =>
             d.ServiceType == typeof(ICurrentUserService));
-
         services.Remove(currentUserServiceDescriptor);
-
         // Register testing version
-        services.AddTransient(provider =>
-            Mock.Of<ICurrentUserService>(s => s.UserId == _currentUserId));
+        var currentUserServiceMock = new Mock<ICurrentUserService>();
+        currentUserServiceMock.Setup(s => s.UserId).Returns(_currentUserId);
+        services.AddTransient<ICurrentUserService>(provider => currentUserServiceMock.Object);
 
         _scopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
         
@@ -85,7 +86,11 @@ public class Testing
 
     public static string RunAsDefaultUserAsync()
     {
-        return "mockuserid";
+        using var scope = _scopeFactory.CreateScope();
+
+        var userSvc = scope.ServiceProvider.GetService<ICurrentUserService>();
+
+        return userSvc.UserId;
     }
 
     public static async Task ResetState()
