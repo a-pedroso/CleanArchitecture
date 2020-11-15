@@ -7,9 +7,9 @@ https://github.com/jasontaylordev/CleanArchitecture
 https://github.com/iammukeshm/CleanArchitecture.WebApi
 
 ## Technologies
-* .NET Core 3.1
-* ASP.NET Core 3.1
-* Entity Framework Core 3.1
+* .NET 5.0
+* ASP.NET Core 5.0
+* Entity Framework Core 5.0
 * Swagger
 * Serilog
 * CQRS with MediatR
