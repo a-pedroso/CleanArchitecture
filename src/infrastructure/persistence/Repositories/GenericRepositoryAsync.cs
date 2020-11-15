@@ -29,6 +29,7 @@ namespace CleanArchitecture.Infrastructure.Persistence.Repositories
         {
             return await _dbContext
                 .Set<T>()
+                .OrderBy(o => o.Id)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .AsNoTracking()

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>CleanArchitecture.Application.IntegrationTests</RootNamespace>
     <AssemblyName>CleanArchitecture.Application.IntegrationTests</AssemblyName>
     
@@ -19,11 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
     <PackageReference Include="nunit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
-    <PackageReference Include="Moq" Version="4.14.7" />
+    <PackageReference Include="Moq" Version="4.15.1" />
     <PackageReference Include="Respawn" Version="3.3.0" />
   </ItemGroup>
 
@@ -32,6 +32,10 @@
     <ProjectReference Include="..\..\src\infrastructure\persistence\Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\..\src\infrastructure\shared\Infrastructure.Shared.csproj" />
     <ProjectReference Include="..\..\src\presentation\WebApi\WebApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Products\Queries\" />
   </ItemGroup>
 
 </Project>
