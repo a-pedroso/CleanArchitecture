@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 using Respawn;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -99,7 +100,7 @@ public class Testing
         _currentUserId = null;
     }
 
-    public static async Task<TEntity> FindAsync<TEntity>(int id)
+    public static async Task<TEntity> FindAsync<TEntity>(params object[] id)
         where TEntity : class
     {
         using var scope = _scopeFactory.CreateScope();

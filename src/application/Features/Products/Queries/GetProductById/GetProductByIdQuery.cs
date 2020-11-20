@@ -12,7 +12,7 @@ namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById
 {
     public class GetProductByIdQuery : IRequest<Response<ProductDTO>>
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
     }
 
     public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Response<ProductDTO>>

@@ -34,8 +34,4 @@
     <ProjectReference Include="..\..\src\presentation\WebApi\WebApi.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Products\Queries\" />
-  </ItemGroup>
-
 </Project>
