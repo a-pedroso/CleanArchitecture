@@ -58,6 +58,8 @@ namespace CleanArchitecture.WebApi.Controllers
 
         // POST /Product
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] CreateProductCommand cmd)
         {
             _logger.LogDebug($"Create Product {cmd}");
@@ -77,13 +79,13 @@ namespace CleanArchitecture.WebApi.Controllers
             return Ok(response);
         }
 
-        // DELETE /Product/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        // DELETE /Product/
+        [HttpDelete]
+        public async Task<IActionResult> Delete(DeleteProductByIdCommand cmd)
         {
-            _logger.LogDebug($"Delete Product {id}");
+            _logger.LogDebug($"Delete Product {cmd?.Id}");
 
-            var cmd = new DeleteProductByIdCommand() { Id = id };
+            //var cmd = new DeleteProductByIdCommand() { Id = id };
             var response = await _mediator.Send(cmd);
             return Ok(response);
         }

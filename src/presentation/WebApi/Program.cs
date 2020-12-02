@@ -1,6 +1,5 @@
 using App.Metrics;
 using App.Metrics.AspNetCore;
-using App.Metrics.Formatters.Json;
 using App.Metrics.Formatters.Prometheus;
 using CleanArchitecture.Infrastructure.Persistence.Context;
 using CleanArchitecture.WebApi.Helpers;
@@ -78,7 +77,7 @@ namespace CleanArchitecture.WebApi
                     
                     var services = serviceScope.ServiceProvider;
                     using var scope = services.GetRequiredService<IServiceScopeFactory>().CreateScope();
-                    await DbMigrationHelper<ApplicationDbContext>.EnsureDatabaseMigratedAsync(scope); 
+                    await DbMigrationHelper<ApplicationDbContext>.EnsureDatabaseMigratedAsync(scope);
                 }
 
                 Log.Information($"web api starting at {DateTime.UtcNow}");

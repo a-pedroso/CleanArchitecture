@@ -1,6 +1,7 @@
 ﻿using CleanArchitecture.Application.Common.DTO;
 using CleanArchitecture.Application.Features.WeatherForecasts.Queries.GetWeatherForecasts;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace CleanArchitecture.WebApi.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IEnumerable<WeatherForecastDTO>> Get()
         {
             _logger.LogDebug("getting WeatherForecast");

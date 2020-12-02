@@ -27,13 +27,15 @@ namespace CleanArchitecture.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplication();
-
-            services.AddInfrastructurePersistence(Configuration);
-            
-            services.AddInfrastructureShared(Configuration);
+            services.AddApplication()
+                    .AddInfrastructurePersistence(Configuration)
+                    .AddInfrastructureShared(Configuration);
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+            services.AddForwardHeadersExtension(Configuration);
+
+            services.AddDataProtectionKeysExtension(Configuration);
 
             services.AddHttpContextAccessor();
 
@@ -55,6 +57,8 @@ namespace CleanArchitecture.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseForwardHeadersExtension(Configuration);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
