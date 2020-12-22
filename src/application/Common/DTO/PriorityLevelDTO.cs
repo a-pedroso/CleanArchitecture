@@ -1,6 +1,6 @@
 ﻿namespace CleanArchitecture.Application.Common.DTO
 {
-    public class PriorityLevelDTO
+    public record PriorityLevelDTO
     {
         public int Value { get; set; }
 

@@ -39,6 +39,8 @@ namespace CleanArchitecture.WebApi
 
             services.AddHttpContextAccessor();
 
+            services.AddAuthenticationExtension(Configuration);
+
             services.AddControllers()
                     .AddMetrics()
                     .AddFluentValidation();
@@ -49,7 +51,7 @@ namespace CleanArchitecture.WebApi
             // For pushing metrics to reporters like console, file, influxDb, etc.
             //services.AddMetricsReportingHostedService();
 
-            services.AddSwaggerExtension();
+            services.AddSwaggerExtension(Configuration);
 
             services.AddHealthChecks();
         }
@@ -70,16 +72,19 @@ namespace CleanArchitecture.WebApi
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseHealthChecks("/health");
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers()
+                         .RequireAuthorization();
             });
 
-            app.UseSwaggerExtension();
+            app.UseSwaggerExtension(Configuration);
         }
     }
 }

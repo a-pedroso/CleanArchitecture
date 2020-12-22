@@ -2,7 +2,7 @@
 
 namespace CleanArchitecture.Application.Common.DTO
 {
-    public class WeatherForecastDTO
+    public record WeatherForecastDTO
     {
         public DateTime Date { get; set; }
 

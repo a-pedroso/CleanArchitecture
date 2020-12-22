@@ -1,6 +1,6 @@
 ﻿namespace CleanArchitecture.Application.Common.DTO
 {
-    public class TodoItemDTO
+    public record TodoItemDTO
     {
         public int Id { get; set; }
 

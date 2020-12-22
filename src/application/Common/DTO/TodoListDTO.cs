@@ -2,7 +2,7 @@
 
 namespace CleanArchitecture.Application.Common.DTO
 {
-    public class TodoListDTO
+    public record TodoListDTO
     {
         public TodoListDTO()
         {

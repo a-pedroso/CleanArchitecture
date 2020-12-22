@@ -1,6 +1,6 @@
 ﻿namespace CleanArchitecture.Application.Common.DTO
 {
-    public class ExportTodosDTO
+    public record ExportTodosDTO
     {
         public string FileName { get; set; }
 

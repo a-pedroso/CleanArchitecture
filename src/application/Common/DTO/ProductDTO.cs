@@ -1,6 +1,6 @@
 ﻿namespace CleanArchitecture.Application.Common.DTO
 {
-    public class ProductDTO
+    public record ProductDTO
     {
         public long Id { get; set; }
         public string Name { get; set; }

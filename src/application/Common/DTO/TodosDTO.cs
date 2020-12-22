@@ -2,7 +2,7 @@
 
 namespace CleanArchitecture.Application.Common.DTO
 {
-    public class TodosDTO
+    public record TodosDTO
     {
         public IList<PriorityLevelDTO> PriorityLevels { get; set; }
 
