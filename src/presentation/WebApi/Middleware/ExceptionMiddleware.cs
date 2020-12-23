@@ -3,6 +3,7 @@ using CleanArchitecture.WebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -36,15 +37,15 @@ namespace CleanArchitecture.WebApi.Middleware
         {
             ErrorDetails errorDetails = ex switch
             {
-                ValidationException => ConfigResponse(context, ex.Message, HttpStatusCode.BadRequest),
-                NotFoundException => ConfigResponse(context, ex.Message, HttpStatusCode.NotFound),
-                _ => ConfigResponse(context, "Internal Server Error.", HttpStatusCode.InternalServerError)
+                ValidationException => ConfigResponse(context, HttpStatusCode.BadRequest, ex.Message, (ex as ValidationException).Errors),
+                NotFoundException => ConfigResponse(context, HttpStatusCode.NotFound, ex.Message),
+                _ => ConfigResponse(context, HttpStatusCode.InternalServerError, "Internal Server Error.")
             };
 
             return context.Response.WriteAsync(errorDetails.ToString());
         }
 
-        private static ErrorDetails ConfigResponse(HttpContext context, string message, HttpStatusCode statusCode)
+        private static ErrorDetails ConfigResponse(HttpContext context, HttpStatusCode statusCode, string message, IDictionary<string, string[]> errors = null)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)statusCode;
@@ -52,7 +53,8 @@ namespace CleanArchitecture.WebApi.Middleware
             return new ErrorDetails()
             {
                 StatusCode = context.Response.StatusCode,
-                Message = message
+                Message = message,
+                Errors = errors
             };
         }
     }
