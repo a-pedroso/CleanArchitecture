@@ -5,7 +5,9 @@ using CleanArchitecture.Infrastructure.Shared;
 using CleanArchitecture.WebApi.Helpers;
 using CleanArchitecture.WebApi.Services;
 using FluentValidation.AspNetCore;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -53,7 +55,8 @@ namespace CleanArchitecture.WebApi
 
             services.AddSwaggerExtension(Configuration);
 
-            services.AddHealthChecks();
+            services.AddHealthChecks()
+                    .AddSqlServer(Configuration.GetConnectionString("DefaultConnection"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,18 +73,24 @@ namespace CleanArchitecture.WebApi
 
             app.UseSerilogRequestLogging();
 
+            app.UseCustomExceptionMiddleware();
+
             app.UseRouting();
 
             app.UseAuthentication();
 
             app.UseAuthorization();
 
-            app.UseHealthChecks("/health");
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers()
                          .RequireAuthorization();
+
+                endpoints.MapHealthChecks("/health", new HealthCheckOptions
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
             });
 
             app.UseSwaggerExtension(Configuration);

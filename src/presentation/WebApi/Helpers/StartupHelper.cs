@@ -1,9 +1,9 @@
 ﻿using CleanArchitecture.WebApi.Configuration;
+using CleanArchitecture.WebApi.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -157,5 +157,9 @@ namespace CleanArchitecture.WebApi.Helpers
             return services;
         }
 
+        public static void UseCustomExceptionMiddleware(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ExceptionMiddleware>();
+        }
     }
 }

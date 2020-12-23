@@ -25,6 +25,8 @@
     <PackageReference Include="App.Metrics.Prometheus" Version="4.2.0-preview.0.19" />
     <PackageReference Include="App.Metrics.Reporting.Console" Version="4.2.0-preview.0.19" />
     <PackageReference Include="App.Metrics.Reporting.TextFile" Version="4.2.0-preview.0.19" />
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.2.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="3.1.2" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="9.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="5.0.0" />
