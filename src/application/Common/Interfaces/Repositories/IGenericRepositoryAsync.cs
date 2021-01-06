@@ -11,7 +11,7 @@ namespace CleanArchitecture.Application.Common.Interfaces.Repositories
     {
         Task<T> GetByIdAsync(TKey id);
         Task<IReadOnlyList<T>> GetAllAsync();
-        Task<IReadOnlyList<T>> GetPagedReponseAsync(int pageNumber, int pageSize);
+        Task<IPagedResponse<T>> GetPagedReponseAsync(int pageNumber, int pageSize);
         Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);

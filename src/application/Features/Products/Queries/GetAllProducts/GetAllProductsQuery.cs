@@ -25,10 +25,10 @@ namespace CleanArchitecture.Application.Features.Products.Queries.GetAllProducts
 
         public async Task<PagedResponse<IEnumerable<ProductDTO>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
-            var product = await _productRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize);
-            var productViewModel = _mapper.Map<IEnumerable<ProductDTO>>(product);
+            var pagedResponse = await _productRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize);
+            var productViewModel = _mapper.Map<IEnumerable<ProductDTO>>(pagedResponse.Data);
             
-            return PagedResponse<IEnumerable<ProductDTO>>.Success(productViewModel, request.PageNumber, request.PageSize);
+            return PagedResponse<IEnumerable<ProductDTO>>.Success(productViewModel, request.PageNumber, request.PageSize, pagedResponse.TotalCount);
         }
     }
 }

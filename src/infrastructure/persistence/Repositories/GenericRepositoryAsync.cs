@@ -25,31 +25,42 @@ namespace CleanArchitecture.Infrastructure.Persistence.Repositories
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public async Task<IReadOnlyList<T>> GetPagedReponseAsync(int pageNumber, int pageSize)
+        public virtual async Task<IPagedResponse<T>> GetPagedReponseAsync(int pageNumber, int pageSize)
         {
-            return await _dbContext
+            int totalCount = await _dbContext
+                .Set<T>()
+                .AsNoTracking()
+                .CountAsync();
+
+            var data = await _dbContext
                 .Set<T>()
                 .OrderBy(o => o.Id)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .AsNoTracking()
                 .ToListAsync();
+
+            return new PagedResponse<T>()
+            {
+                Data = data,
+                TotalCount = totalCount
+            };
         }
 
-        public async Task<T> AddAsync(T entity)
+        public virtual async Task<T> AddAsync(T entity)
         {
             await _dbContext.Set<T>().AddAsync(entity);
             await _dbContext.SaveChangesAsync();
             return entity;
         }
 
-        public async Task UpdateAsync(T entity)
+        public virtual async Task UpdateAsync(T entity)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(T entity)
+        public virtual async Task DeleteAsync(T entity)
         {
             _dbContext.Set<T>().Remove(entity);
             await _dbContext.SaveChangesAsync();
