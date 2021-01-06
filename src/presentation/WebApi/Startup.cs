@@ -2,6 +2,7 @@ using CleanArchitecture.Application;
 using CleanArchitecture.Application.Common.Interfaces.Services;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Shared;
+using CleanArchitecture.WebApi.Extensions.StartupExtensions;
 using CleanArchitecture.WebApi.Helpers;
 using CleanArchitecture.WebApi.Services;
 using FluentValidation.AspNetCore;
@@ -33,30 +34,20 @@ namespace CleanArchitecture.WebApi
                     .AddInfrastructurePersistence(Configuration)
                     .AddInfrastructureShared(Configuration);
 
-            services.AddScoped<ICurrentUserService, CurrentUserService>();
-
-            services.AddForwardHeadersExtension(Configuration);
-
-            services.AddDataProtectionKeysExtension(Configuration);
-
-            services.AddHttpContextAccessor();
-
-            services.AddAuthenticationExtension(Configuration);
-
             services.AddControllers()
                     .AddMetrics()
                     .AddFluentValidation();
 
-            // CPU, memory & GC
-            services.AddAppMetricsCollectors();
+            services.AddHttpContextAccessor();
 
-            // For pushing metrics to reporters like console, file, influxDb, etc.
-            //services.AddMetricsReportingHostedService();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-            services.AddSwaggerExtension(Configuration);
-
-            services.AddHealthChecks()
-                    .AddSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            services.AddAppMetricsExtension(Configuration)
+                    .AddAuthenticationExtension(Configuration)
+                    .AddDataProtectionKeysExtension(Configuration)
+                    .AddForwardHeadersExtension(Configuration)
+                    .AddHealthChecksExtension(Configuration)
+                    .AddSwaggerExtension(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,13 +64,15 @@ namespace CleanArchitecture.WebApi
 
             app.UseSerilogRequestLogging();
 
-            app.UseCustomExceptionMiddleware();
+            app.UseExceptionMiddlewareExtension();
 
             app.UseRouting();
 
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseSwaggerExtension(Configuration);
 
             app.UseEndpoints(endpoints =>
             {
@@ -92,8 +85,6 @@ namespace CleanArchitecture.WebApi
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
                 });
             });
-
-            app.UseSwaggerExtension(Configuration);
         }
     }
 }
