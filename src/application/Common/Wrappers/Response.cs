@@ -14,7 +14,7 @@ namespace CleanArchitecture.Application.Common.Wrappers
             Succeeded = true;
             Message = message;
             Data = data;
-            Errors = null;
+            Errors = new List<string>();
         }
 
         // Failure
