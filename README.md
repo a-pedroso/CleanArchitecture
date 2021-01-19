@@ -35,4 +35,4 @@ This project is licensed with the [MIT license](LICENSE).
 - [ ] refactor application 
   - [ ] towards task based and not CRUD ops
   - [ ] move DTOs to queries folder and remove them from common
-  - [ ] wrappers: rename response to result w/ empty, data and paged data result
+  - [x] wrappers: rename response to result w/ empty, data and paged data result

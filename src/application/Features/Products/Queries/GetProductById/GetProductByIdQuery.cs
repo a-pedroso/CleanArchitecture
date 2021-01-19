@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById
 {
-    public class GetProductByIdQuery : IRequest<Response<ProductDTO>>
+    public class GetProductByIdQuery : IRequest<Result<ProductDTO>>
     {
         public long Id { get; set; }
     }
 
-    public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Response<ProductDTO>>
+    public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Result<ProductDTO>>
     {
         private readonly IProductRepositoryAsync _productRepository;
         private readonly IMapper _mapper;
@@ -28,7 +28,7 @@ namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById
             _mapper = mapper;
         }
 
-        public async Task<Response<ProductDTO>> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
+        public async Task<Result<ProductDTO>> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
         {
             var product = await _productRepository.GetByIdAsync(query.Id);
             if (product == null)
@@ -38,7 +38,7 @@ namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById
 
             var dto = _mapper.Map<ProductDTO>(product);
             
-            return Response<ProductDTO>.Success(dto);
+            return Result.Ok(dto);
         }
     }
 }

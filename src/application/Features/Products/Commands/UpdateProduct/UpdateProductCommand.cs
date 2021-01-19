@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Features.Products.Commands.UpdateProduct
 {
-    public class UpdateProductCommand : IRequest<Response<long>>
+    public class UpdateProductCommand : IRequest<Result<long>>
     {
         public long Id { get; set; }
         public string Name { get; set; }
@@ -16,14 +16,14 @@ namespace CleanArchitecture.Application.Features.Products.Commands.UpdateProduct
         public decimal Rate { get; set; }
     }
 
-    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Response<long>>
+    public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Result<long>>
     {
         private readonly IProductRepositoryAsync _productRepository;
         public UpdateProductCommandHandler(IProductRepositoryAsync productRepository)
         {
             _productRepository = productRepository;
         }
-        public async Task<Response<long>> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
+        public async Task<Result<long>> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
         {
             var product = await _productRepository.GetByIdAsync(command.Id);
 
@@ -37,7 +37,7 @@ namespace CleanArchitecture.Application.Features.Products.Commands.UpdateProduct
                 product.Rate = command.Rate;
                 product.Description = command.Description;
                 await _productRepository.UpdateAsync(product);
-                return Response<long>.Success(product.Id);
+                return Result.Ok(product.Id);
             }
         }
     }

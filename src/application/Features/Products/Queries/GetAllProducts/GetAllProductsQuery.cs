@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Features.Products.Queries.GetAllProducts
 {
-    public class GetAllProductsQuery : PagedRequest, IRequest<PagedResponse<IEnumerable<ProductDTO>>>
+    public class GetAllProductsQuery : PagedRequest, IRequest<PagedResult<IEnumerable<ProductDTO>>>
     {
     }
 
-    public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, PagedResponse<IEnumerable<ProductDTO>>>
+    public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, PagedResult<IEnumerable<ProductDTO>>>
     {
         private readonly IProductRepositoryAsync _productRepository;
         private readonly IMapper _mapper;
@@ -23,12 +23,12 @@ namespace CleanArchitecture.Application.Features.Products.Queries.GetAllProducts
             _mapper = mapper;
         }
 
-        public async Task<PagedResponse<IEnumerable<ProductDTO>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResult<IEnumerable<ProductDTO>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
             var pagedResponse = await _productRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize);
             var productViewModel = _mapper.Map<IEnumerable<ProductDTO>>(pagedResponse.Data);
             
-            return PagedResponse<IEnumerable<ProductDTO>>.Success(productViewModel, request.PageNumber, request.PageSize, pagedResponse.TotalCount);
+            return Result.Ok(request.PageNumber, request.PageSize, pagedResponse.TotalCount, productViewModel);
         }
     }
 }

@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Features.Products.Commands.CreateProduct
 {
-    public class CreateProductCommand : IRequest<Response<long>>
+    public class CreateProductCommand : IRequest<Result<long>>
     {
         public string Name { get; set; }
         public string Barcode { get; set; }
         public string Description { get; set; }
         public decimal Rate { get; set; }
     }
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Response<long>>
+    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Result<long>>
     {
         private readonly IProductRepositoryAsync _productRepository;
         private readonly IMapper _mapper;
@@ -25,11 +25,11 @@ namespace CleanArchitecture.Application.Features.Products.Commands.CreateProduct
             _mapper = mapper;
         }
 
-        public async Task<Response<long>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<Result<long>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var product = _mapper.Map<Product>(request);
             await _productRepository.AddAsync(product);
-            return Response<long>.Success(product.Id);
+            return Result.Ok(product.Id);
         }
     }
 }
