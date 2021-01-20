@@ -25,7 +25,7 @@ namespace CleanArchitecture.Application.IntegrationTests.Products.Queries
 
             var result = await SendAsync(query);
 
-            result.Data.Should().HaveCount(1);
+            result.Data.Data.Should().HaveCount(1);
         }
     }
 }

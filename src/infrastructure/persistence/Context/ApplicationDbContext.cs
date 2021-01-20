@@ -25,10 +25,6 @@ namespace CleanArchitecture.Infrastructure.Persistence.Context
             _dateTime = dateTime;
         }
 
-        public DbSet<TodoList> TodoLists { get; set; }
-
-        public DbSet<TodoItem> TodoItems { get; set; }
-
         public DbSet<Product> Product { get; set; }
 
 

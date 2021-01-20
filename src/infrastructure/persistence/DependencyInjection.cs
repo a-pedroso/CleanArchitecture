@@ -27,8 +27,6 @@ namespace CleanArchitecture.Infrastructure.Persistence
             #region Repositories
             services.AddTransient(typeof(IGenericRepositoryAsync<,>), typeof(GenericRepositoryAsync<,>));
             services.AddTransient<IProductRepositoryAsync, ProductRepositoryAsync>();
-            services.AddTransient<ITodoItemRepositoryAsync, TodoItemRepositoryAsync>();
-            services.AddTransient<ITodoListRepositoryAsync, TodoListRepositoryAsync>();
             #endregion
 
             return services;

@@ -34,5 +34,5 @@ This project is licensed with the [MIT license](LICENSE).
   - [ ] domain
 - [ ] refactor application 
   - [ ] towards task based and not CRUD ops
-  - [ ] move DTOs to queries folder and remove them from common
+  - [x] move DTOs to queries folder and remove them from common
   - [x] wrappers: rename response to result w/ empty, data and paged data result

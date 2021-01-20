@@ -16,8 +16,9 @@ namespace CleanArchitecture.Application.IntegrationTests.WeatherForecasts.Querie
 
             var result = await SendAsync(query);
 
-            result.Should().NotBeEmpty();
-            result.Should().HaveCount(5);
+            result.Should().NotBeNull();
+            result.Data.Should().NotBeEmpty();
+            result.Data.Should().HaveCount(5);
         }
     }
 }

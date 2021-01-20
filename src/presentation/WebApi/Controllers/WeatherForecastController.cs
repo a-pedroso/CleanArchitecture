@@ -1,5 +1,4 @@
-﻿using CleanArchitecture.Application.Common.DTO;
-using CleanArchitecture.Application.Features.WeatherForecasts.Queries.GetWeatherForecasts;
+﻿using CleanArchitecture.Application.Features.WeatherForecasts.Queries.GetWeatherForecasts;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,10 +25,11 @@ namespace CleanArchitecture.WebApi.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IEnumerable<WeatherForecastDTO>> Get()
+        public async Task<IActionResult> Get()
         {
             _logger.LogDebug("getting WeatherForecast");
-            return await _mediator.Send(new GetWeatherForecastsQuery());
+            var result = await _mediator.Send(new GetWeatherForecastsQuery());
+            return Ok(result);
         }
     }
 }
