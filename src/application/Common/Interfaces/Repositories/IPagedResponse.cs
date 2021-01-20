@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿//using System.Collections.Generic;
 
-namespace CleanArchitecture.Application.Common.Interfaces.Repositories
-{
-    public interface IPagedResponse<T>
-    {
-        public int TotalCount { get; set; }
-        public IReadOnlyList<T> Data { get; set; }
-    }
-}
+//namespace CleanArchitecture.Application.Common.Interfaces.Repositories
+//{
+//    public interface IPagedResponse<T>
+//    {
+//        public int PageNumber { get; }
+//        public int PageSize { get; }
+//        public int TotalCount { get; }
+//        public IReadOnlyList<T> Data { get; }
+//    }
+//}

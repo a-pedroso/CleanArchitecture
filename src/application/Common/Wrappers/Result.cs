@@ -93,24 +93,24 @@ namespace CleanArchitecture.Application.Common.Wrappers
         }
     }
 
-    public class PagedResult<T> : Result<T>
-    {
-        public int PageNumber { get; } = 0;
-        public int PageSize { get; } = 0;
-        public int? TotalCount { get; } = 0;
+    //public class PagedResult<T> : Result<T>
+    //{
+    //    public int PageNumber { get; } = 0;
+    //    public int PageSize { get; } = 0;
+    //    public int? TotalCount { get; } = 0;
 
-        protected internal PagedResult(
-            int pageNumber, 
-            int pageSize, 
-            int totalCount, 
-            T value, 
-            bool isSuccess, 
-            IEnumerable<string> errors = null)
-            : base(value, isSuccess, errors)
-        {
-            PageNumber = pageNumber;
-            PageSize = pageSize;
-            TotalCount = totalCount;
-        }
-    }
+    //    protected internal PagedResult(
+    //        int pageNumber, 
+    //        int pageSize, 
+    //        int totalCount, 
+    //        T value, 
+    //        bool isSuccess, 
+    //        IEnumerable<string> errors = null)
+    //        : base(value, isSuccess, errors)
+    //    {
+    //        PageNumber = pageNumber;
+    //        PageSize = pageSize;
+    //        TotalCount = totalCount;
+    //    }
+    //}
 }
