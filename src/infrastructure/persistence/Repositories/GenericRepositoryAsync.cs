@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Application.Common.Interfaces.Repositories;
+using CleanArchitecture.Application.Common.Wrappers;
 using CleanArchitecture.Domain.Common;
 using CleanArchitecture.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
@@ -25,8 +26,10 @@ namespace CleanArchitecture.Infrastructure.Persistence.Repositories
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public virtual async Task<IPagedResponse<T>> GetPagedReponseAsync(int pageNumber, int pageSize)
+        public virtual async Task<PagedResponse<T>> GetPagedReponseAsync(int pageNumber, int pageSize)
         {
+            // TODO: refactor this. 2 roundtrips???
+
             int totalCount = await _dbContext
                 .Set<T>()
                 .AsNoTracking()
@@ -40,11 +43,7 @@ namespace CleanArchitecture.Infrastructure.Persistence.Repositories
                 .AsNoTracking()
                 .ToListAsync();
 
-            return new PagedResponse<T>()
-            {
-                Data = data,
-                TotalCount = totalCount
-            };
+            return new PagedResponse<T>(pageNumber, pageSize, totalCount, data);
         }
 
         public virtual async Task<T> AddAsync(T entity)

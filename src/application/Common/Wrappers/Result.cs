@@ -31,11 +31,6 @@ namespace CleanArchitecture.Application.Common.Wrappers
             return new Result<T>(default(T), false, errors);
         }
 
-        //public static PagedResult<T> Fail<T>(IEnumerable<string> errors)
-        //{
-        //    return new PagedResult<T>(0, 0, 0, default(T), false, errors);
-        //}
-
         public static Result Ok()
         {
             return new Result(true);
@@ -44,15 +39,6 @@ namespace CleanArchitecture.Application.Common.Wrappers
         public static Result<T> Ok<T>(T value)
         {
             return new Result<T>(value, true);
-        }
-
-        public static PagedResult<T> Ok<T>(
-            int pageNumber,
-            int pageSize,
-            int totalCount, 
-            T value)
-        {
-            return new PagedResult<T>(pageNumber, pageSize, totalCount, value, true);
         }
 
         public static Result Combine(params Result[] results)
@@ -92,25 +78,4 @@ namespace CleanArchitecture.Application.Common.Wrappers
             _data = data;
         }
     }
-
-    //public class PagedResult<T> : Result<T>
-    //{
-    //    public int PageNumber { get; } = 0;
-    //    public int PageSize { get; } = 0;
-    //    public int? TotalCount { get; } = 0;
-
-    //    protected internal PagedResult(
-    //        int pageNumber, 
-    //        int pageSize, 
-    //        int totalCount, 
-    //        T value, 
-    //        bool isSuccess, 
-    //        IEnumerable<string> errors = null)
-    //        : base(value, isSuccess, errors)
-    //    {
-    //        PageNumber = pageNumber;
-    //        PageSize = pageSize;
-    //        TotalCount = totalCount;
-    //    }
-    //}
 }
