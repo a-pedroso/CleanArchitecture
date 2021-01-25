@@ -2,7 +2,7 @@
 
 namespace CleanArchitecture.Application.Common.Exceptions
 {
-    public class NotFoundException : Exception
+    public class NotFoundException : ApplicationException
     {
         public NotFoundException()
             : base()

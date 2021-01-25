@@ -4,11 +4,11 @@ namespace CleanArchitecture.Application.Features.Products.Queries.GetAllProducts
 {
     public record GetAllProductsDTO
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public string Barcode { get; set; }
-        public string Description { get; set; }
-        public decimal Rate { get; set; }
+        public long Id { get; init; }
+        public string Name { get; init; }
+        public string Barcode { get; init; }
+        public string Description { get; init; }
+        public decimal Rate { get; init; }
 
         public static GetAllProductsDTO ToDto(Product product)
         {
