@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Common.Interfaces.Repositories
 {
-    public interface IGenericRepositoryAsync<T, TKey> 
+    public interface IGenericRepository<T, TKey> 
         where T : BaseEntity<TKey>
         where TKey : IEquatable<TKey>
     {

@@ -15,6 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System;
+using System.Linq;
 
 namespace CleanArchitecture.WebApi
 {
@@ -22,6 +24,10 @@ namespace CleanArchitecture.WebApi
     {
         public Startup(IConfiguration configuration)
         {
+            Console.WriteLine("------------------" + configuration.GetValue<string>("Pedroso:Value") + "------------------");
+            Console.WriteLine("------------------" + configuration.GetValue<string>("ConnectionStrings:DefaultConnection") + "------------------");
+
+            //var providers = ((Microsoft.Extensions.Configuration.ConfigurationRoot)configuration).Providers;
             Configuration = configuration;
         }
 

@@ -10,8 +10,8 @@ namespace CleanArchitecture.Application.Features.Products.Commands.DeleteProduct
 {
     public class DeleteProductByIdCommandHandler : IRequestHandler<DeleteProductByIdCommand, Result<long>>
     {
-        private readonly IProductRepositoryAsync _productRepository;
-        public DeleteProductByIdCommandHandler(IProductRepositoryAsync productRepository)
+        private readonly IProductRepository _productRepository;
+        public DeleteProductByIdCommandHandler(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }

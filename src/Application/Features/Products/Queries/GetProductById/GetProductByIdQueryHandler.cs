@@ -10,10 +10,10 @@ namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById
 {
     public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Result<GetProductByIdDTO>>
     {
-        private readonly IProductRepositoryAsync _productRepository;
+        private readonly IProductRepository _productRepository;
 
         public GetProductByIdQueryHandler(
-            IProductRepositoryAsync productRepository)
+            IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }

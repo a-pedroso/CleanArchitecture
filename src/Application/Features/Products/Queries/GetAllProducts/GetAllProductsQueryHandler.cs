@@ -9,8 +9,8 @@ namespace CleanArchitecture.Application.Features.Products.Queries.GetAllProducts
 {
     public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, Result<PagedResponse<GetAllProductsDTO>>>
     {
-        private readonly IProductRepositoryAsync _productRepository;
-        public GetAllProductsQueryHandler(IProductRepositoryAsync productRepository)
+        private readonly IProductRepository _productRepository;
+        public GetAllProductsQueryHandler(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }

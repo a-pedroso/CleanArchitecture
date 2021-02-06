@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Application.Common.Interfaces.Repositories;
+using CleanArchitecture.Application.Features.Products;
 using CleanArchitecture.Infrastructure.Persistence.Context;
 using CleanArchitecture.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -25,8 +26,8 @@ namespace CleanArchitecture.Infrastructure.Persistence
             }
             
             #region Repositories
-            services.AddTransient(typeof(IGenericRepositoryAsync<,>), typeof(GenericRepositoryAsync<,>));
-            services.AddTransient<IProductRepositoryAsync, ProductRepositoryAsync>();
+            services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>))
+                    .AddScoped<IProductRepository, ProductRepository>();
             #endregion
 
             return services;

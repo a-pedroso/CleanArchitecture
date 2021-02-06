@@ -6,9 +6,9 @@ namespace CleanArchitecture.Application.Features.Products.Commands.CreateProduct
 {
     public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
     {
-        private readonly IProductRepositoryAsync productRepository;
+        private readonly IProductRepository productRepository;
 
-        public CreateProductCommandValidator(IProductRepositoryAsync productRepository)
+        public CreateProductCommandValidator(IProductRepository productRepository)
         {
             this.productRepository = productRepository;
 

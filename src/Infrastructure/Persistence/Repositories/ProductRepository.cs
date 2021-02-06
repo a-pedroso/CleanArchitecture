@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.Application.Common.Interfaces.Repositories;
+﻿using CleanArchitecture.Application.Features.Products;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Infrastructure.Persistence.Repositories
 {
-    public class ProductRepositoryAsync : GenericRepositoryAsync<Product, long>, IProductRepositoryAsync
+    public class ProductRepository : GenericRepository<Product, long>, IProductRepository
     {
         private readonly DbSet<Product> _products;
 
-        public ProductRepositoryAsync(ApplicationDbContext dbContext) : base(dbContext)
+        public ProductRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
             _products = dbContext.Set<Product>();
         }

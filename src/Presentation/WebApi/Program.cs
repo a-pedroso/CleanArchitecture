@@ -46,7 +46,8 @@ namespace CleanArchitecture.WebApi
             {
                 var host = CreateHostBuilder(args).Build();
                 
-                if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").Equals("Development"))
+                if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").Equals("Development")
+                    && Configuration.GetValue<bool>("UseInMemoryDatabase") == false)
                 {
                     using var serviceScope = host.Services.CreateScope();
                     

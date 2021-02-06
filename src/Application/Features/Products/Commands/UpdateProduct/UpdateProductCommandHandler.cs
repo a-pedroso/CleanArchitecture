@@ -10,8 +10,8 @@ namespace CleanArchitecture.Application.Features.Products.Commands.UpdateProduct
 {
     public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Result<long>>
     {
-        private readonly IProductRepositoryAsync _productRepository;
-        public UpdateProductCommandHandler(IProductRepositoryAsync productRepository)
+        private readonly IProductRepository _productRepository;
+        public UpdateProductCommandHandler(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }

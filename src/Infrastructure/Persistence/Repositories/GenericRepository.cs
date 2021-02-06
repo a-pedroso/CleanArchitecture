@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Infrastructure.Persistence.Repositories
 {
-    public class GenericRepositoryAsync<T, TKey> : IGenericRepositoryAsync<T, TKey> 
+    public class GenericRepository<T, TKey> : IGenericRepository<T, TKey> 
         where T : BaseEntity<TKey>
         where TKey : IEquatable<TKey>
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public GenericRepositoryAsync(ApplicationDbContext dbContext)
+        public GenericRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

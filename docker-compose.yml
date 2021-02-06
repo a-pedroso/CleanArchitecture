@@ -1,0 +1,72 @@
+version: '3.4'
+
+services:
+  webapi:
+    image: ${DOCKER_REGISTRY-}webapi
+    build:
+      context: .
+      dockerfile: src/Presentation/WebApi/Dockerfile
+    environment:
+      - "Pedroso__Value=docker"
+      - "UseInMemoryDatabase=false"
+      - "ConnectionStrings__DefaultConnection=Server=webapi-db;database=CleanArchitectureDb;User Id=sa;Password=Password_123;"
+      - "DataProtectionKeysConfig__Enabled=true"
+      - "DataProtectionKeysConfig__RedisServer=webapi-redis,6380"
+    depends_on:
+      - webapi-db
+      - webapi-redis
+    networks:
+      - clean-architecture-network
+
+  webapi-db:
+    image: mcr.microsoft.com/mssql/server:latest
+    container_name: webapi-database
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password_123
+    ports:
+      - "1434:1433"
+    volumes: 
+          - sqlsystem:/var/opt/mssql/
+          - sqldata:/var/opt/sqlserver/data
+          - sqllog:/var/opt/sqlserver/log
+          - sqlbackup:/var/opt/sqlserver/backup
+    networks:
+      - clean-architecture-network
+
+  webapi-redis:
+    container_name: webapi-redis-server
+    image: redis:latest
+    hostname: webapi-redis-host
+    ports:
+      - 6380:6379
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    networks:
+      - clean-architecture-network
+
+  webapi-redis-commander:
+    container_name: webapi-redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:webapi-redis-host:6380
+      - HTTP_USER=root
+      - HTTP_PASSWORD=qwerty
+    ports:
+      - 8090:8081
+    depends_on:
+      - webapi-redis
+    networks:
+      - clean-architecture-network
+
+volumes:
+  redis-data:
+  sqlsystem:
+  sqldata:
+  sqllog:
+  sqlbackup:
+
+networks:
+  clean-architecture-network: {}

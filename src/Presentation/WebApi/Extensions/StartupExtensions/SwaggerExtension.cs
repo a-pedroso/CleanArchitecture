@@ -1,5 +1,4 @@
-﻿using CleanArchitecture.WebApi.Configuration;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -13,29 +12,31 @@ namespace CleanArchitecture.WebApi.Extensions.StartupExtensions
 {
     public static class SwaggerExtension
     {
+        private const string _apiName = "Clean Architecture API";
+        private const string _apiVersionV1 = "v1";
+
         public static IServiceCollection AddSwaggerExtension(this IServiceCollection services, IConfiguration configuration)
         {
             var oauthAuthority = configuration.GetValue<string>("Authentication:Jwt:Authority");
             var oauthDefinition = "oauth2";
             var oauthScopes = new Dictionary<string, string>
             {
-                { configuration.GetValue<string>("Authentication:Swagger:Scopes:Api"), ApiConfigurationConsts.ApiName }
+                { configuration.GetValue<string>("Authentication:Swagger:Scopes:Api"), _apiName }
             };
-
 
             // https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-3.1&tabs=visual-studio#customize-and-extend
             return services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc(
-                    ApiConfigurationConsts.ApiVersionV1,
+                    _apiVersionV1,
                     new OpenApiInfo
                     {
-                        Title = ApiConfigurationConsts.ApiName,
-                        Version = ApiConfigurationConsts.ApiVersionV1,
+                        Title = _apiName,
+                        Version = _apiVersionV1,
                         Contact = new OpenApiContact
                         {
-                            Name = "DPS",
-                            Url = new Uri("https://www.ceiia.com/"),
+                            Name = "André Pedroso",
+                            Url = new Uri("https://a-pedroso.github.io/"),
                         }
                     });
 
@@ -81,7 +82,12 @@ namespace CleanArchitecture.WebApi.Extensions.StartupExtensions
             app.UseSwaggerUI(options =>
             {
                 options.OAuthClientId(configuration.GetValue<string>("Authentication:Swagger:Client"));
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", ApiConfigurationConsts.ApiName);
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", _apiName);
+            });
+            app.UseReDoc(options => 
+            {
+                options.DocumentTitle = "REDOC API DOC";
+                options.SpecUrl = "/swagger/v1/swagger.json";
             });
             return app;
         }

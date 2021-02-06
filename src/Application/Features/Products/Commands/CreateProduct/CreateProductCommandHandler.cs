@@ -9,8 +9,8 @@ namespace CleanArchitecture.Application.Features.Products.Commands.CreateProduct
 {
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Result<long>>
     {
-        private readonly IProductRepositoryAsync _productRepository;
-        public CreateProductCommandHandler(IProductRepositoryAsync productRepository)
+        private readonly IProductRepository _productRepository;
+        public CreateProductCommandHandler(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
