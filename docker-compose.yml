@@ -7,7 +7,6 @@ services:
       context: .
       dockerfile: src/Presentation/WebApi/Dockerfile
     environment:
-      - "Pedroso__Value=docker"
       - "UseInMemoryDatabase=false"
       - "ConnectionStrings__DefaultConnection=Server=webapi-db;database=CleanArchitectureDb;User Id=sa;Password=Password_123;"
       - "DataProtectionKeysConfig__Enabled=true"
@@ -51,7 +50,7 @@ services:
     image: rediscommander/redis-commander:latest
     restart: always
     environment:
-      - REDIS_HOSTS=local:webapi-redis-host:6380
+      - REDIS_HOSTS=local:host.docker.internal:6380
       - HTTP_USER=root
       - HTTP_PASSWORD=qwerty
     ports:
