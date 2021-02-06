@@ -26,12 +26,12 @@ This project is licensed with the [MIT license](LICENSE).
   - [x] client credentials
   - [ ] user authorization flow
 - [ ] Containerize WebApi
-  - [ ] add redis for data protection
-  - [ ] add loki and seq for logs
+  - [x] add docker compose
+  - [x] add redis for data protection
+  - [ ] add loki and/or seq for logs
 - [ ] Separation of Reads and Writes
   - [ ] repositories
   - [ ] ORM for writes, dapper for reads
-  - [ ] domain
 - [ ] refactor application 
   - [ ] towards task based and not CRUD ops
   - [x] move DTOs to queries folder and remove them from common
