@@ -11,9 +11,15 @@ services:
       - "ConnectionStrings__DefaultConnection=Server=webapi-db;database=CleanArchitectureDb;User Id=sa;Password=Password_123;"
       - "DataProtectionKeysConfig__Enabled=true"
       - "DataProtectionKeysConfig__RedisServer=webapi-redis,6380"
+      - "OpenTelemetryConfig__Enabled=true"
+      - "OpenTelemetryConfig__OtlpReceiverUri=http://webapi-jaeger:4317"
+      - "Serilog__WriteTo__1__Args__serverUrl=http://host.docker.internal:5342"
+      - "Serilog__WriteTo__2__Args__connectionString=Server=webapi-db;database=CleanArchitectureDb;User Id=sa;Password=Password_123;"
     depends_on:
       - webapi-db
       - webapi-redis
+      - webapi-seq
+      - webapi-jaeger
     networks:
       - clean-architecture-network
 
@@ -65,11 +71,22 @@ services:
     image: jaegertracing/opentelemetry-all-in-one
     restart: unless-stopped
     ports:
-      - 13133:13133
-      - 16686:16686
-      - 4317:55680
-    depends_on:
-      - webapi
+      - 13133:13133 #health-check
+      - 16686:16686 #ui
+      - 4317:55680  #ingest / otmp receiver
+    networks:
+      - clean-architecture-network
+
+  webapi-seq:
+    container_name: "webapi-seq"  
+    image: datalust/seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5343:80"
+      - "5342:5341"
+    volumes:
+      - seq-data:/data
     networks:
       - clean-architecture-network
 
@@ -79,6 +96,7 @@ volumes:
   sqldata:
   sqllog:
   sqlbackup:
+  seq-data:
 
 networks:
   clean-architecture-network: {}

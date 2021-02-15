@@ -16,6 +16,7 @@ https://github.com/iammukeshm/CleanArchitecture.WebApi
 * Fluent Validation
 * Health Checks
 * App.Metrics
+* OpenTelemetry
 
 ## License
 
@@ -28,7 +29,7 @@ This project is licensed with the [MIT license](LICENSE).
 - [ ] Containerize WebApi
   - [x] add docker compose
   - [x] add redis for data protection
-  - [ ] add loki and/or seq for logs
+  - [x] add loki and/or seq for logs
 - [ ] Separation of Reads and Writes
   - [ ] repositories
   - [ ] ORM for writes, dapper for reads
