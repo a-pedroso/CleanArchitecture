@@ -3,14 +3,12 @@ using CleanArchitecture.Infrastructure.Persistence.Context;
 using CleanArchitecture.WebApi;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 using Respawn;
-using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,8 +33,6 @@ public class Testing
 
         _configuration = builder.Build();
 
-        var startup = new Startup(_configuration);
-
         var services = new ServiceCollection();
 
         services.AddSingleton(Mock.Of<IWebHostEnvironment>(w =>
@@ -44,6 +40,10 @@ public class Testing
             w.ApplicationName == "CleanArchitecture.WebApi"));
 
         services.AddLogging();
+
+        var startup = new Startup(_configuration, Mock.Of<IWebHostEnvironment>(w =>
+                                                            w.EnvironmentName == "Development" &&
+                                                            w.ApplicationName == "CleanArchitecture.WebApi"));
 
         startup.ConfigureServices(services);
 

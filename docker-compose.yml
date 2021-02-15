@@ -60,6 +60,19 @@ services:
     networks:
       - clean-architecture-network
 
+  webapi-jaeger:
+    container_name: webapi-jaeger
+    image: jaegertracing/opentelemetry-all-in-one
+    restart: unless-stopped
+    ports:
+      - 13133:13133
+      - 16686:16686
+      - 4317:55680
+    depends_on:
+      - webapi
+    networks:
+      - clean-architecture-network
+
 volumes:
   redis-data:
   sqlsystem:

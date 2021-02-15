@@ -3,7 +3,6 @@ using CleanArchitecture.Application.Common.Interfaces.Services;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Shared;
 using CleanArchitecture.WebApi.Extensions.StartupExtensions;
-using CleanArchitecture.WebApi.Helpers;
 using CleanArchitecture.WebApi.Services;
 using FluentValidation.AspNetCore;
 using HealthChecks.UI.Client;
@@ -15,25 +14,20 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using System;
-using System.Linq;
 
 namespace CleanArchitecture.WebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
-            Console.WriteLine("------------------" + configuration.GetValue<string>("Pedroso:Value") + "------------------");
-            Console.WriteLine("------------------" + configuration.GetValue<string>("ConnectionStrings:DefaultConnection") + "------------------");
-
-            //var providers = ((Microsoft.Extensions.Configuration.ConfigurationRoot)configuration).Providers;
             Configuration = configuration;
+            WebHostEnvironment = webHostEnvironment;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment WebHostEnvironment { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplication()
@@ -49,6 +43,7 @@ namespace CleanArchitecture.WebApi
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             services.AddAppMetricsExtension(Configuration)
+                    .AddOpenTelemetryExtension(Configuration, WebHostEnvironment)
                     .AddAuthenticationExtension(Configuration)
                     .AddDataProtectionKeysExtension(Configuration)
                     .AddForwardHeadersExtension(Configuration)

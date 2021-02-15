@@ -88,6 +88,7 @@ namespace CleanArchitecture.WebApi.Extensions.StartupExtensions
             {
                 options.DocumentTitle = "REDOC API DOC";
                 options.SpecUrl = "/swagger/v1/swagger.json";
+                options.RoutePrefix = "redoc";
             });
             return app;
         }
