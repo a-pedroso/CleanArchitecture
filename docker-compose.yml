@@ -2,7 +2,11 @@ version: '3.4'
 
 services:
   webapi:
+    container_name: "webapi"
     image: ${DOCKER_REGISTRY-}webapi
+    ports:
+      - 5000:80
+      - 5001:443
     build:
       context: .
       dockerfile: src/Presentation/WebApi/Dockerfile
@@ -15,11 +19,13 @@ services:
       - "OpenTelemetryConfig__OtlpReceiverUri=http://webapi-jaeger:4317"
       - "Serilog__WriteTo__1__Args__serverUrl=http://host.docker.internal:5342"
       - "Serilog__WriteTo__2__Args__connectionString=Server=webapi-db;database=CleanArchitectureDb;User Id=sa;Password=Password_123;"
+      - "Serilog__WriteTo__3__Args__serverUrl=http://webapi-loki:3100"
     depends_on:
       - webapi-db
       - webapi-redis
       - webapi-seq
       - webapi-jaeger
+      - webapi-loki
     networks:
       - clean-architecture-network
 
@@ -89,6 +95,27 @@ services:
       - seq-data:/data
     networks:
       - clean-architecture-network
+
+  webapi-loki:
+    container_name: "webapi-loki"
+    image: grafana/loki:master
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - clean-architecture-network
+
+  webapi-grafana:
+    container_name: "webapi-grafana"  
+    image: grafana/grafana:master
+    ports:
+      - "3000:3000"
+    networks:
+      - clean-architecture-network
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+    depends_on:
+      - webapi-loki
 
 volumes:
   redis-data:
