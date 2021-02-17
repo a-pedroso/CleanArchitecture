@@ -26,7 +26,7 @@ This project is licensed with the [MIT license](LICENSE).
 - [ ] Add JWT Auth and a simple IDP
   - [x] client credentials
   - [ ] user authorization flow
-- [ ] Containerize WebApi
+- [x] Containerize WebApi
   - [x] add docker compose
   - [x] add redis for data protection
   - [x] add loki and/or seq for logs
