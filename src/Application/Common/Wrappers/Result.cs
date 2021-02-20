@@ -28,7 +28,7 @@ namespace CleanArchitecture.Application.Common.Wrappers
 
         public static Result<T> Fail<T>(IEnumerable<string> errors)
         {
-            return new Result<T>(default(T), false, errors);
+            return new Result<T>(default, false, errors);
         }
 
         public static Result Ok()

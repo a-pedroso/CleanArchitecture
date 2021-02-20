@@ -1,0 +1,122 @@
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+name: cleanarchitecture
+
+#extensions:
+#- name: seq
+#  logPath: ./.logs
+
+services:
+
+- name: webapi
+  project: src/Presentation/WebApi/WebApi.csproj
+  bindings:
+  - port: 5001
+    protocol: https
+  replicas: 3
+  env:
+  - name: UseInMemoryDatabase
+    value: false
+  - name: ConnectionStrings__DefaultConnection
+    value: Server=localhost,1433;database=CleanArchitectureDb;User Id=sa;Password=Password_123;
+  - name: DataProtectionKeysConfig__Enabled
+    value: true
+  - name: DataProtectionKeysConfig__RedisServer
+    value: localhost,6379
+  - name: OpenTelemetryConfig__Enabled
+    value: true
+  - name: OpenTelemetryConfig__OtlpReceiverUri
+    value: http://localhost:4317
+  - name: Serilog__WriteTo__1__Args__serverUrl
+    value: http://localhost:5341
+  - name: Serilog__WriteTo__2__Args__connectionString
+    value: Server=localhost,1433;database=CleanArchitectureDb;User Id=sa;Password=Password_123;
+  - name: Serilog__WriteTo__3__Args__serverUrl
+    value: http://localhost:3100
+
+- name: webapi-db
+  image: mcr.microsoft.com/mssql/server
+  env:
+  - name: ACCEPT_EULA
+    value: Y
+  - name: SA_PASSWORD
+    value: Password_123
+  volumes:
+  - name: webapi-db-storage
+    target: /var/opt/mssql
+  bindings:
+  - port: 1433
+    connectionString: Server=${host}:${port};Database=CleanArchitectureDb;MultipleActiveResultSets=true;User Id=sa;Password=${env:SA_PASSWORD}
+
+- name: webapi-redis
+  image: redis
+  bindings:
+  - port: 6379
+  volumes:
+  - name: webapi-redis-storage
+    target: /data
+
+- name: webapi-redis-commander
+  image: rediscommander/redis-commander:latest
+  bindings:
+  - port: 8081
+    protocol: http
+  env:
+  - name: REDIS_HOSTS
+    value: local:webapi-redis:6379
+  - name: HTTP_USER
+    value: root
+  - name: HTTP_USER
+    value: Password_123
+
+- name: webapi-seq
+  image: datalust/seq
+  bindings:
+  - port: 5341
+    protocol: http
+  volumes:
+  - name: webapi-seq-storage
+    target: /data
+  env:
+  - name: ACCEPT_EULA
+    value: Y
+
+- name: webapi-loki
+  image: grafana/loki
+  bindings:
+  - port: 3100
+  volumes:
+  - name: webapi-loki-storage
+    target: /loki
+
+- name: webapi-grafana
+  image: grafana/grafana
+  bindings:
+  - port: 3000
+    containerPort: 3000
+    protocol: http
+  env:
+  - name: GF_INSTALL_PLUGINS
+    value: grafana-piechart-panel
+  volumes:
+  - name: webapi-grafana-storage
+    target: /var/lib/grafana
+
+- name: webapi-jaeger
+  image: jaegertracing/opentelemetry-all-in-one
+  bindings:
+  - port: 13133
+    containerPort: 13133
+    name: health-check
+    protocol: http
+  - port: 16686
+    containerPort: 16686
+    name: jaeger-ui
+    protocol: http
+  - port: 4317
+    containerPort: 55680
+    name: otmp-receiver

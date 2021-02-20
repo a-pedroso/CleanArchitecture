@@ -5,8 +5,8 @@ services:
     container_name: "webapi"
     image: ${DOCKER_REGISTRY-}webapi
     ports:
-      - 5000:80
-      - 5001:443
+      - 5500:80
+      - 5501:443
     build:
       context: .
       dockerfile: src/Presentation/WebApi/Dockerfile
@@ -16,10 +16,10 @@ services:
       - "DataProtectionKeysConfig__Enabled=true"
       - "DataProtectionKeysConfig__RedisServer=webapi-redis,6380"
       - "OpenTelemetryConfig__Enabled=true"
-      - "OpenTelemetryConfig__OtlpReceiverUri=http://webapi-jaeger:4317"
+      - "OpenTelemetryConfig__OtlpReceiverUri=http://webapi-jaeger:4318"
       - "Serilog__WriteTo__1__Args__serverUrl=http://host.docker.internal:5342"
       - "Serilog__WriteTo__2__Args__connectionString=Server=webapi-db;database=CleanArchitectureDb;User Id=sa;Password=Password_123;"
-      - "Serilog__WriteTo__3__Args__serverUrl=http://webapi-loki:3100"
+      - "Serilog__WriteTo__3__Args__serverUrl=http://webapi-loki:3101"
     depends_on:
       - webapi-db
       - webapi-redis
@@ -77,9 +77,9 @@ services:
     image: jaegertracing/opentelemetry-all-in-one
     restart: unless-stopped
     ports:
-      - 13133:13133 #health-check
-      - 16686:16686 #ui
-      - 4317:55680  #ingest / otmp receiver
+      - 13134:13133 #health-check
+      - 16687:16686 #ui
+      - 4318:55680  #ingest / otmp receiver
     networks:
       - clean-architecture-network
 
@@ -100,7 +100,7 @@ services:
     container_name: "webapi-loki"
     image: grafana/loki:master
     ports:
-      - "3100:3100"
+      - "3101:3100"
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - clean-architecture-network
@@ -109,7 +109,7 @@ services:
     container_name: "webapi-grafana"  
     image: grafana/grafana:master
     ports:
-      - "3000:3000"
+      - "3001:3000"
     networks:
       - clean-architecture-network
     environment:

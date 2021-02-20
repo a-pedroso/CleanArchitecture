@@ -10,23 +10,25 @@ namespace CleanArchitecture.WebApi.Helpers
     {
         static int tries;
 
-        public static async Task EnsureDatabaseMigratedAsync(IServiceScope scope) 
+        public static async Task EnsureDatabaseMigratedAsync(IServiceScope scope, Exception exception = null) 
         {
             if(tries == 4)
             {
-                throw new Exception("EnsureDatabaseMigratedAsync FAILED");
+                throw exception;
             }
 
             try
             {
+                // wait some seconds to make sure the mssql is already up
+                await Task.Delay(TimeSpan.FromSeconds(10));
+
                 tries++;
                 using var context = scope.ServiceProvider.GetRequiredService<TdbContext>();
                 await context.Database.MigrateAsync();
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                await Task.Delay(TimeSpan.FromSeconds(15));
-                await EnsureDatabaseMigratedAsync(scope);
+                await EnsureDatabaseMigratedAsync(scope, ex);
             }
         }
     }
