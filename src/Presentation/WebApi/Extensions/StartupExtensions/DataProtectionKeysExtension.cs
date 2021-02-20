@@ -15,11 +15,12 @@ namespace CleanArchitecture.WebApi.Extensions.StartupExtensions
                 // https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/implementation/key-storage-providers?view=aspnetcore-5.0&tabs=visual-studio#redis
 
                 var redisServerUri = configuration["DataProtectionKeysConfig:RedisServer"];
+                var keyName = configuration["DataProtectionKeysConfig:KeyName"];
 
                 var redis = ConnectionMultiplexer.Connect(redisServerUri);
 
                 services.AddDataProtection()
-                        .PersistKeysToStackExchangeRedis(redis, "Firmware-Manager-DataProtection-Keys");
+                        .PersistKeysToStackExchangeRedis(redis, keyName);
             }
 
             return services;
