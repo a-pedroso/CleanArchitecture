@@ -13,6 +13,7 @@ services:
     environment:
       - "UseInMemoryDatabase=false"
       - "ConnectionStrings__DefaultConnection=Server=webapi-db;database=CleanArchitectureDb;User Id=sa;Password=Password_123;"
+      - "ConnectionStrings__WEBAPI-DB=Server=webapi-db;database=CleanArchitectureDb;User Id=sa;Password=Password_123;"
       - "DataProtectionKeysConfig__Enabled=true"
       - "DataProtectionKeysConfig__RedisServer=webapi-redis,6380"
       - "OpenTelemetryConfig__Enabled=true"

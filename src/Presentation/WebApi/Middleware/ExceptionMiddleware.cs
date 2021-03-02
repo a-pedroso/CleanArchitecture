@@ -33,16 +33,17 @@ namespace CleanArchitecture.WebApi.Middleware
                 await HandleExceptionAsync(httpContext, ex);
             }
         }
-        private Task HandleExceptionAsync(HttpContext context, Exception ex)
+        private static async Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
             ErrorDetails errorDetails = ex switch
             {
+                BadRequestException => ConfigResponse(context, HttpStatusCode.BadRequest, ex.Message),
                 ValidationException => ConfigResponse(context, HttpStatusCode.BadRequest, ex.Message, (ex as ValidationException).Errors),
                 NotFoundException => ConfigResponse(context, HttpStatusCode.NotFound, ex.Message),
                 _ => ConfigResponse(context, HttpStatusCode.InternalServerError, "Internal Server Error.")
             };
 
-            return context.Response.WriteAsync(errorDetails.ToString());
+            await context.Response.WriteAsync(errorDetails.ToString());
         }
 
         private static ErrorDetails ConfigResponse(HttpContext context, HttpStatusCode statusCode, string message, IDictionary<string, string[]> errors = null)

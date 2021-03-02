@@ -4,7 +4,6 @@ using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Shared;
 using CleanArchitecture.WebApi.Extensions.StartupExtensions;
 using CleanArchitecture.WebApi.Services;
-using FluentValidation.AspNetCore;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -35,8 +34,7 @@ namespace CleanArchitecture.WebApi
                     .AddInfrastructureShared(Configuration);
 
             services.AddControllers()
-                    .AddMetrics()
-                    .AddFluentValidation();
+                    .AddMetrics();
 
             services.AddHttpContextAccessor();
 
