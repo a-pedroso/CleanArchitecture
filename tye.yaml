@@ -73,18 +73,6 @@ services:
   - name: HTTP_USER
     value: Password_123
 
-#- name: webapi-seq
-#  image: datalust/seq
-#  bindings:
-#  - port: 5341
-#    protocol: http
-#  volumes:
-#  - name: webapi-seq-storage
-#    target: /data
-#  env:
-#  - name: ACCEPT_EULA
-#    value: Y
-
 - name: webapi-loki
   image: grafana/loki
   bindings:
