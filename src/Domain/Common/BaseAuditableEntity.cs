@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace CleanArchitecture.Domain.Common
+﻿namespace CleanArchitecture.Domain.Common
 {
+    using System;
+
     public abstract class BaseAuditableEntity<TKey> : BaseEntity<TKey>, IBaseAuditableEntity
         where TKey : IEquatable<TKey>
     {

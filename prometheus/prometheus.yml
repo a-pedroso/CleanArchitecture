@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 5s
+  external_labels:
+    monitor: 'prometheus'
+scrape_configs:
+  - job_name: 'webapi'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['host.docker.internal:5000']

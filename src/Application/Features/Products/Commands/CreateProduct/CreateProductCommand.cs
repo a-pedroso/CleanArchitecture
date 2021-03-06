@@ -1,8 +1,8 @@
-﻿using CleanArchitecture.Application.Common.Wrappers;
-using MediatR;
-
-namespace CleanArchitecture.Application.Features.Products.Commands.CreateProduct
+﻿namespace CleanArchitecture.Application.Features.Products.Commands.CreateProduct
 {
+    using CleanArchitecture.Application.Common.Wrappers;
+    using MediatR;
+
     public class CreateProductCommand : IRequest<Result<long>>
     {
         public string Name { get; set; }

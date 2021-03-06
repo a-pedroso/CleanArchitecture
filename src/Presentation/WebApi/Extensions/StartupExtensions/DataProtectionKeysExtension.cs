@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.DataProtection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using StackExchange.Redis;
-using System;
-
-namespace CleanArchitecture.WebApi.Extensions.StartupExtensions
+﻿namespace CleanArchitecture.WebApi.Extensions.StartupExtensions
 {
+    using Microsoft.AspNetCore.DataProtection;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using StackExchange.Redis;
+    using System;
+
     public static class DataProtectionKeysExtension
     {
         public static IServiceCollection AddDataProtectionKeysExtension(this IServiceCollection services, IConfiguration configuration)

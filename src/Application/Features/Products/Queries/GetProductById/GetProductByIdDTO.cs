@@ -1,7 +1,7 @@
-﻿using CleanArchitecture.Domain.Entities;
-
-namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById
+﻿namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById
 {
+    using CleanArchitecture.Domain.Entities;
+
     public record GetProductByIdDTO
     {
         public long Id { get; set; }

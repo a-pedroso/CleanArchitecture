@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace CleanArchitecture.Application.Common.Wrappers
+﻿namespace CleanArchitecture.Application.Common.Wrappers
 {
+    using System.Collections.Generic;
+
     public class PagedResponse<T>
     {
         public int PageNumber { get; }

@@ -1,13 +1,13 @@
-﻿using CleanArchitecture.Application.Features.WeatherForecasts.Queries.GetWeatherForecasts;
-using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.WebApi.Controllers
+﻿namespace CleanArchitecture.WebApi.Controllers
 {
+    using CleanArchitecture.Application.Features.WeatherForecasts.Queries.GetWeatherForecasts;
+    using MediatR;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

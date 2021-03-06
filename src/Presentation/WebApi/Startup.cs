@@ -1,21 +1,18 @@
-using CleanArchitecture.Application;
-using CleanArchitecture.Application.Common.Interfaces.Services;
-using CleanArchitecture.Infrastructure.Persistence;
-using CleanArchitecture.Infrastructure.Shared;
-using CleanArchitecture.WebApi.Extensions.StartupExtensions;
-using CleanArchitecture.WebApi.Services;
-using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Serilog;
-
 namespace CleanArchitecture.WebApi
 {
+    using CleanArchitecture.Application;
+    using CleanArchitecture.Application.Common.Interfaces.Services;
+    using CleanArchitecture.Infrastructure.Persistence;
+    using CleanArchitecture.Infrastructure.Shared;
+    using CleanArchitecture.WebApi.Extensions.StartupExtensions;
+    using CleanArchitecture.WebApi.Services;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Serilog;
+
     public class Startup
     {
         public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
@@ -33,14 +30,13 @@ namespace CleanArchitecture.WebApi
                     .AddInfrastructurePersistence(Configuration)
                     .AddInfrastructureShared(Configuration);
 
-            services.AddControllers()
-                    .AddMetrics();
+            services.AddControllers();
 
             services.AddHttpContextAccessor();
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-            services.AddAppMetricsExtension(Configuration)
+            services.AddMetricsExtension()
                     .AddOpenTelemetryExtension(Configuration, WebHostEnvironment)
                     .AddAuthenticationExtension(Configuration)
                     .AddDataProtectionKeysExtension(Configuration)
@@ -49,7 +45,6 @@ namespace CleanArchitecture.WebApi
                     .AddSwaggerExtension(Configuration);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseForwardHeadersExtension(Configuration);
@@ -59,30 +54,24 @@ namespace CleanArchitecture.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseSerilogRequestLogging();
 
             app.UseExceptionMiddlewareExtension();
 
             app.UseRouting();
-
             app.UseAuthentication();
-
             app.UseAuthorization();
 
+            app.UseMetricsExtension();
+
             app.UseSwaggerExtension(Configuration);
+
+            app.UseHealthChecksExtension();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers()
                          .RequireAuthorization();
-
-                endpoints.MapHealthChecks("/health", new HealthCheckOptions
-                {
-                    Predicate = _ => true,
-                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                });
             });
         }
     }

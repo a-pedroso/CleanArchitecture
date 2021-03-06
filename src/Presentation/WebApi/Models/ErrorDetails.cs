@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Text.Json;
-
-namespace CleanArchitecture.WebApi.Models
+﻿namespace CleanArchitecture.WebApi.Models
 {
+    using System.Collections.Generic;
+    using System.Text.Json;
+
+
     public class ErrorDetails
     {
         public int StatusCode { get; set; }

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace CleanArchitecture.Application.Common.Wrappers
+﻿namespace CleanArchitecture.Application.Common.Wrappers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class Result
     {
         public bool IsSuccess { get; }

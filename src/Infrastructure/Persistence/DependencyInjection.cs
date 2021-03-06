@@ -1,13 +1,13 @@
-﻿using CleanArchitecture.Application.Common.Interfaces.Repositories;
-using CleanArchitecture.Application.Features.Products;
-using CleanArchitecture.Infrastructure.Persistence.Context;
-using CleanArchitecture.Infrastructure.Persistence.Repositories;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace CleanArchitecture.Infrastructure.Persistence
+﻿namespace CleanArchitecture.Infrastructure.Persistence
 {
+    using CleanArchitecture.Application.Common.Interfaces.Repositories;
+    using CleanArchitecture.Application.Features.Products;
+    using CleanArchitecture.Infrastructure.Persistence.Context;
+    using CleanArchitecture.Infrastructure.Persistence.Repositories;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+
     public static class DependencyInjection
     {
         public static IServiceCollection AddInfrastructurePersistence(this IServiceCollection services, IConfiguration configuration)

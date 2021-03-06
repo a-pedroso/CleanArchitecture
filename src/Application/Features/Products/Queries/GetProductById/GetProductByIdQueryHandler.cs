@@ -1,13 +1,12 @@
-﻿using CleanArchitecture.Application.Common.Exceptions;
-using CleanArchitecture.Application.Common.Interfaces.Repositories;
-using CleanArchitecture.Application.Common.Wrappers;
-using CleanArchitecture.Domain.Entities;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById
+﻿namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById
 {
+    using CleanArchitecture.Application.Common.Exceptions;
+    using CleanArchitecture.Application.Common.Wrappers;
+    using CleanArchitecture.Domain.Entities;
+    using MediatR;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Result<GetProductByIdDTO>>
     {
         private readonly IProductRepository _productRepository;

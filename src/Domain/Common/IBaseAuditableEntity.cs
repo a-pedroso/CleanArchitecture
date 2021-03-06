@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace CleanArchitecture.Domain.Common
+﻿namespace CleanArchitecture.Domain.Common
 {
+    using System;
+
     public interface IBaseAuditableEntity
     {
         public string CreatedBy { get; set; }

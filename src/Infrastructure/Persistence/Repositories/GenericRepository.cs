@@ -1,15 +1,15 @@
-﻿using CleanArchitecture.Application.Common.Interfaces.Repositories;
-using CleanArchitecture.Application.Common.Wrappers;
-using CleanArchitecture.Domain.Common;
-using CleanArchitecture.Infrastructure.Persistence.Context;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.Infrastructure.Persistence.Repositories
+﻿namespace CleanArchitecture.Infrastructure.Persistence.Repositories
 {
+    using CleanArchitecture.Application.Common.Interfaces.Repositories;
+    using CleanArchitecture.Application.Common.Wrappers;
+    using CleanArchitecture.Domain.Common;
+    using CleanArchitecture.Infrastructure.Persistence.Context;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class GenericRepository<T, TKey> : IGenericRepository<T, TKey> 
         where T : BaseEntity<TKey>
         where TKey : IEquatable<TKey>

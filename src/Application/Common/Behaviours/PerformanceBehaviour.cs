@@ -1,13 +1,12 @@
-﻿using MediatR;
-using Microsoft.Extensions.Logging;
-using CleanArchitecture.Application.Common.Interfaces;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-using CleanArchitecture.Application.Common.Interfaces.Services;
-
-namespace CleanArchitecture.Application.Common.Behaviours
+﻿namespace CleanArchitecture.Application.Common.Behaviours
 {
+    using CleanArchitecture.Application.Common.Interfaces.Services;
+    using MediatR;
+    using Microsoft.Extensions.Logging;
+    using System.Diagnostics;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
         private readonly Stopwatch _timer;

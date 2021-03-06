@@ -1,10 +1,11 @@
-﻿using CleanArchitecture.Domain.Common;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-
-namespace CleanArchitecture.Infrastructure.Persistence.Context.Configurations
+﻿namespace CleanArchitecture.Infrastructure.Persistence.Context.Configurations
 {
+    using CleanArchitecture.Domain.Common;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using System;
+
+
     public class BaseAuditableEntityConfiguration<T, TKey> : IEntityTypeConfiguration<T>
         where TKey : IEquatable<TKey>
         where T : BaseAuditableEntity<TKey>

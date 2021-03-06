@@ -1,9 +1,9 @@
-﻿using CleanArchitecture.Application.Common.Interfaces.Services;
-using Microsoft.AspNetCore.Http;
-using System.Linq;
-
-namespace CleanArchitecture.WebApi.Services
+﻿namespace CleanArchitecture.WebApi.Services
 {
+    using CleanArchitecture.Application.Common.Interfaces.Services;
+    using Microsoft.AspNetCore.Http;
+    using System.Linq;
+
     public class CurrentUserService : ICurrentUserService
     {
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)

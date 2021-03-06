@@ -1,13 +1,13 @@
-﻿using CleanArchitecture.Application.Common.Exceptions;
-using CleanArchitecture.Application.Common.Interfaces.Repositories;
-using CleanArchitecture.Application.Common.Wrappers;
-using CleanArchitecture.Domain.Entities;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.Application.Features.Products.Commands.UpdateProduct
+﻿namespace CleanArchitecture.Application.Features.Products.Commands.UpdateProduct
 {
+    using CleanArchitecture.Application.Common.Exceptions;
+    using CleanArchitecture.Application.Common.Interfaces.Repositories;
+    using CleanArchitecture.Application.Common.Wrappers;
+    using CleanArchitecture.Domain.Entities;
+    using MediatR;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Result<long>>
     {
         private readonly IProductRepository _productRepository;

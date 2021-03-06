@@ -1,16 +1,16 @@
-﻿using CleanArchitecture.Application.Features.Products.Commands.CreateProduct;
-using CleanArchitecture.Application.Features.Products.Commands.DeleteProductById;
-using CleanArchitecture.Application.Features.Products.Commands.UpdateProduct;
-using CleanArchitecture.Application.Features.Products.Queries.GetAllProducts;
-using CleanArchitecture.Application.Features.Products.Queries.GetProductById;
-using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.WebApi.Controllers
+﻿namespace CleanArchitecture.WebApi.Controllers
 {
+    using CleanArchitecture.Application.Features.Products.Commands.CreateProduct;
+    using CleanArchitecture.Application.Features.Products.Commands.DeleteProductById;
+    using CleanArchitecture.Application.Features.Products.Commands.UpdateProduct;
+    using CleanArchitecture.Application.Features.Products.Queries.GetAllProducts;
+    using CleanArchitecture.Application.Features.Products.Queries.GetProductById;
+    using MediatR;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using System.Threading.Tasks;
+
     [ApiController]
     [Route("[controller]")]
     [Produces("application/json")]
