@@ -1,12 +1,11 @@
-﻿using CleanArchitecture.Application.Common.Interfaces.Repositories;
-using CleanArchitecture.Application.Common.Wrappers;
-using CleanArchitecture.Domain.Entities;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.Application.Features.Products.Commands.CreateProduct
+﻿namespace CleanArchitecture.Application.Features.Products.Commands.CreateProduct
 {
+    using CleanArchitecture.Application.Common.Wrappers;
+    using CleanArchitecture.Domain.Entities;
+    using MediatR;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Result<long>>
     {
         private readonly IProductRepository _productRepository;

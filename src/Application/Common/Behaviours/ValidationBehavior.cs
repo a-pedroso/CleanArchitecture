@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using FluentValidation;
-using MediatR;
-using ValidationException = CleanArchitecture.Application.Common.Exceptions.ValidationException;
-
-namespace CleanArchitecture.Application.Common.Behaviours
+﻿namespace CleanArchitecture.Application.Common.Behaviours
 {
+    using FluentValidation;
+    using MediatR;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using ValidationException = CleanArchitecture.Application.Common.Exceptions.ValidationException;
+
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {

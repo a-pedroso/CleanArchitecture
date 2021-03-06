@@ -1,17 +1,16 @@
-using CleanArchitecture.Infrastructure.Persistence.Context;
-using CleanArchitecture.WebApi.Extensions.HostBuilderExtensions;
-using CleanArchitecture.WebApi.Helpers;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Serilog;
-using System;
-using System.IO;
-using System.Threading.Tasks;
-
 namespace CleanArchitecture.WebApi
 {
+    using CleanArchitecture.Infrastructure.Persistence.Context;
+    using CleanArchitecture.WebApi.Helpers;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Prometheus.DotNetRuntime;
+    using Serilog;
+    using System;
+    using System.IO;
+    using System.Threading.Tasks;
 
     public class Program
     {
@@ -28,7 +27,6 @@ namespace CleanArchitecture.WebApi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseAppMetricsHostBuilderExtension()
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
@@ -41,6 +39,18 @@ namespace CleanArchitecture.WebApi
                 .ReadFrom.Configuration(Configuration)
                 .WriteTo.Debug()
                 .CreateLogger();
+
+            Console.WriteLine("Enabling prometheus-net.DotNetStats...");
+            DotNetRuntimeStatsBuilder.Customize()
+                .WithThreadPoolSchedulingStats()
+                .WithContentionStats()
+                .WithGcStats()
+                .WithJitStats()
+                .WithThreadPoolStats()
+                .WithExceptionStats()
+                .WithErrorHandler(ex => Log.Error(ex, "DotNetRuntime Error"))
+                //.WithDebuggingMetrics(true);
+                .StartCollecting();
 
             try
             {

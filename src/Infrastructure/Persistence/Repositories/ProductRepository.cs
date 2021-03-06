@@ -1,11 +1,11 @@
-﻿using CleanArchitecture.Application.Features.Products;
-using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Infrastructure.Persistence.Context;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.Infrastructure.Persistence.Repositories
+﻿namespace CleanArchitecture.Infrastructure.Persistence.Repositories
 {
+    using CleanArchitecture.Application.Features.Products;
+    using CleanArchitecture.Domain.Entities;
+    using CleanArchitecture.Infrastructure.Persistence.Context;
+    using Microsoft.EntityFrameworkCore;
+    using System.Threading.Tasks;
+
     public class ProductRepository : GenericRepository<Product, long>, IProductRepository
     {
         private readonly DbSet<Product> _products;

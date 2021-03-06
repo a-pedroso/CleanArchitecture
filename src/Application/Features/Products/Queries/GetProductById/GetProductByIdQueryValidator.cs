@@ -1,7 +1,7 @@
-﻿using FluentValidation;
-
-namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById
+﻿namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById
 {
+    using FluentValidation;
+
     public class GetProductByIdQueryValidator : AbstractValidator<GetProductByIdQuery>
     {
         public GetProductByIdQueryValidator()

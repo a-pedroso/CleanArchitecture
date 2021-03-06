@@ -1,12 +1,11 @@
-﻿using CleanArchitecture.Application.Common.Interfaces.Repositories;
-using CleanArchitecture.Application.Common.Wrappers;
-using MediatR;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.Application.Features.Products.Queries.GetAllProducts
+﻿namespace CleanArchitecture.Application.Features.Products.Queries.GetAllProducts
 {
+    using CleanArchitecture.Application.Common.Wrappers;
+    using MediatR;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, Result<PagedResponse<GetAllProductsDTO>>>
     {
         private readonly IProductRepository _productRepository;

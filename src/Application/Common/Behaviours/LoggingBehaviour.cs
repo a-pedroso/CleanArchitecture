@@ -1,11 +1,11 @@
-﻿using CleanArchitecture.Application.Common.Interfaces.Services;
-using MediatR.Pipeline;
-using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.Application.Common.Behaviours
+﻿namespace CleanArchitecture.Application.Common.Behaviours
 {
+    using CleanArchitecture.Application.Common.Interfaces.Services;
+    using MediatR.Pipeline;
+    using Microsoft.Extensions.Logging;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest>
     {
         private readonly ILogger _logger;

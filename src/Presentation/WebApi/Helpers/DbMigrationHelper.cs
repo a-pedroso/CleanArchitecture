@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.WebApi.Helpers
+﻿namespace CleanArchitecture.WebApi.Helpers
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using System;
+    using System.Threading.Tasks;
+
     public static class DbMigrationHelper<TdbContext>
         where TdbContext : DbContext
     {

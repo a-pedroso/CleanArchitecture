@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace CleanArchitecture.WebApi.Extensions.StartupExtensions
+﻿namespace CleanArchitecture.WebApi.Extensions.StartupExtensions
 {
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+
     public static class AuthenticationExtension
     {
         public static IServiceCollection AddAuthenticationExtension(this IServiceCollection services, IConfiguration configuration)

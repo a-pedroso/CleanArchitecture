@@ -16,8 +16,12 @@ services:
   project: src/Presentation/WebApi/WebApi.csproj
   bindings:
   - port: 5001
+    name: https
     protocol: https
-  replicas: 3
+  - port: 5000
+    name: http
+    protocol: http
+  replicas: 1
   env:
   - name: UseInMemoryDatabase
     value: false
@@ -31,11 +35,9 @@ services:
     value: true
   - name: OpenTelemetryConfig__OtlpReceiverUri
     value: http://localhost:4317
+  - name: Serilog__WriteTo__1__Name
+    value: LokiHttp
   - name: Serilog__WriteTo__1__Args__serverUrl
-    value: http://localhost:5341
-  - name: Serilog__WriteTo__2__Args__connectionString
-    value: Server=localhost,1433;database=CleanArchitectureDb;User Id=sa;Password=Password_123;
-  - name: Serilog__WriteTo__3__Args__serverUrl
     value: http://localhost:3100
 
 - name: webapi-db
@@ -108,3 +110,15 @@ services:
   - port: 4317
     containerPort: 55680
     name: otmp-receiver
+
+- name: prometheus
+  image: prom/prometheus
+  bindings:
+  - port: 9090
+    containerPort: 9090
+    protocol: http
+  volumes:
+  - name: prometheus-configmap
+    source: ./prometheus
+    target: /etc/prometheus
+

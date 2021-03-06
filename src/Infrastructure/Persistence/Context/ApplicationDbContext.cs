@@ -1,15 +1,15 @@
-﻿using CleanArchitecture.Application.Common.Interfaces.Services;
-using CleanArchitecture.Domain.Common;
-using CleanArchitecture.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using System.Data;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.Infrastructure.Persistence.Context
+﻿namespace CleanArchitecture.Infrastructure.Persistence.Context
 {
+    using CleanArchitecture.Application.Common.Interfaces.Services;
+    using CleanArchitecture.Domain.Common;
+    using CleanArchitecture.Domain.Entities;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Storage;
+    using System.Data;
+    using System.Reflection;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class ApplicationDbContext : DbContext
     {
         private readonly ICurrentUserService _currentUserService;

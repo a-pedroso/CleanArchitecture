@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace CleanArchitecture.Application.Features.WeatherForecasts.Queries.GetWeatherForecasts
+﻿namespace CleanArchitecture.Application.Features.WeatherForecasts.Queries.GetWeatherForecasts
 {
+    using System;
+
     public record GetWeatherForecastDTO
     {
         public DateTime Date { get; init; }

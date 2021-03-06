@@ -1,9 +1,9 @@
-﻿using CleanArchitecture.Application.Common.Interfaces.Repositories;
-using FluentValidation;
-using System.Threading;
-using System.Threading.Tasks;
-namespace CleanArchitecture.Application.Features.Products.Commands.CreateProduct
+﻿namespace CleanArchitecture.Application.Features.Products.Commands.CreateProduct
 {
+    using FluentValidation;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
     {
         private readonly IProductRepository productRepository;

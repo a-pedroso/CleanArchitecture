@@ -1,10 +1,10 @@
-﻿using CleanArchitecture.Application.Common.Interfaces.Services;
-using CleanArchitecture.Infrastructure.Shared.Services;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace CleanArchitecture.Infrastructure.Shared
+﻿namespace CleanArchitecture.Infrastructure.Shared
 {
+    using CleanArchitecture.Application.Common.Interfaces.Services;
+    using CleanArchitecture.Infrastructure.Shared.Services;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+
     public static class DependencyInjection
     {
         public static IServiceCollection AddInfrastructureShared(this IServiceCollection services, IConfiguration configuration)

@@ -1,14 +1,14 @@
-﻿using CleanArchitecture.Application.Common.Exceptions;
-using CleanArchitecture.WebApi.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.WebApi.Middleware
+﻿namespace CleanArchitecture.WebApi.Middleware
 {
+    using CleanArchitecture.Application.Common.Exceptions;
+    using CleanArchitecture.WebApi.Models;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Logging;
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// https://code-maze.com/global-error-handling-aspnetcore/
     /// </summary>

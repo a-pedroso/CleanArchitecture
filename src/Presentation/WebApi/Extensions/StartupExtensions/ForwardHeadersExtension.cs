@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-
-
-namespace CleanArchitecture.WebApi.Extensions.StartupExtensions
+﻿namespace CleanArchitecture.WebApi.Extensions.StartupExtensions
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.HttpOverrides;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using System;
+
     public static class ForwardHeadersExtension
     {
         public static IServiceCollection AddForwardHeadersExtension(this IServiceCollection services, IConfiguration configuration)

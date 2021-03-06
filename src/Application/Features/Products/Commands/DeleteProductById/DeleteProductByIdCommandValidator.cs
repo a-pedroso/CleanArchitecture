@@ -1,7 +1,7 @@
-﻿using FluentValidation;
-
-namespace CleanArchitecture.Application.Features.Products.Commands.DeleteProductById
+﻿namespace CleanArchitecture.Application.Features.Products.Commands.DeleteProductById
 {
+    using FluentValidation;
+
     public class DeleteProductByIdCommandValidator : AbstractValidator<DeleteProductByIdCommand>
     {
         public DeleteProductByIdCommandValidator()

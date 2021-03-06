@@ -1,7 +1,7 @@
-﻿using CleanArchitecture.Domain.Common;
-
-namespace CleanArchitecture.Domain.Entities
+﻿namespace CleanArchitecture.Domain.Entities
 {
+    using CleanArchitecture.Domain.Common;
+
     public class Product : BaseAuditableEntity<long>
     {
         public override long Id { get; set; }

@@ -1,13 +1,13 @@
-﻿using CleanArchitecture.Application.Common.Wrappers;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace CleanArchitecture.Application.Features.WeatherForecasts.Queries.GetWeatherForecasts
+﻿namespace CleanArchitecture.Application.Features.WeatherForecasts.Queries.GetWeatherForecasts
 {
+    using CleanArchitecture.Application.Common.Wrappers;
+    using MediatR;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class GetWeatherForecastsQueryHandler : IRequestHandler<GetWeatherForecastsQuery, Result<IEnumerable<GetWeatherForecastDTO>>>
     {
         private static readonly string[] Summaries = new[]
