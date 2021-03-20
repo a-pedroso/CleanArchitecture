@@ -97,7 +97,7 @@ services:
     target: /var/lib/grafana
 
 - name: webapi-jaeger
-  image: jaegertracing/opentelemetry-all-in-one
+  image: jaegertracing/opentelemetry-all-in-one:latest
   bindings:
   - port: 13133
     containerPort: 13133
@@ -110,6 +110,9 @@ services:
   - port: 4317
     containerPort: 55680
     name: otmp-receiver
+  - port: 14268
+    containerPort: 14268
+    name: jaeger-collector
 
 - name: prometheus
   image: prom/prometheus

@@ -14,6 +14,8 @@ namespace CleanArchitecture.WebApi
 
     public class Program
     {
+        protected Program() { }
+
         // serilog setup
         // https://nblumhardt.com/2019/10/serilog-in-aspnetcore-3/
         // https://github.com/serilog/serilog-aspnetcore/blob/71165692d5f66c811c3b251047b12c259ac2fe23/samples/EarlyInitializationSample/Program.cs#L12
@@ -49,7 +51,6 @@ namespace CleanArchitecture.WebApi
                 .WithThreadPoolStats()
                 .WithExceptionStats()
                 .WithErrorHandler(ex => Log.Error(ex, "DotNetRuntime Error"))
-                //.WithDebuggingMetrics(true);
                 .StartCollecting();
 
             try
@@ -57,7 +58,7 @@ namespace CleanArchitecture.WebApi
                 var host = CreateHostBuilder(args).Build();
                 
                 if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").Equals("Development")
-                    && Configuration.GetValue<bool>("UseInMemoryDatabase") == false)
+                    && Configuration.GetValue<bool>("UseInMemoryDatabase"))
                 {
                     using var serviceScope = host.Services.CreateScope();
                     
@@ -72,7 +73,6 @@ namespace CleanArchitecture.WebApi
             catch (Exception ex)
             {
                 Log.Fatal(ex, "Host terminated unexpectedly");
-                return;
             }
             finally
             {

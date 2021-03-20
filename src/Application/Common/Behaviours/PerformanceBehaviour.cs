@@ -14,7 +14,7 @@
         private readonly ICurrentUserService _currentUserService;
 
         public PerformanceBehaviour(
-            ILogger<TRequest> logger, 
+            ILogger<TRequest> logger,
             ICurrentUserService currentUserService)
         {
             _timer = new Stopwatch();

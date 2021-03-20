@@ -13,7 +13,6 @@
         {
             services.AddHealthChecks()
                     .AddSqlServer(configuration.GetConnectionString("DefaultConnection"))
-                    //TODO: add health check dependencies
                     .ForwardToPrometheus();
 
             return services;
@@ -28,7 +27,6 @@
                     Predicate = _ => true,
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
                 });
-                //endpoints.MapHealthChecks("/health");
             });
 
             return app;
