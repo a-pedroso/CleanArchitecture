@@ -25,20 +25,26 @@ services:
   env:
   - name: UseInMemoryDatabase
     value: false
+  - name: RunEFCoreMigrations
+    value: true
   - name: ConnectionStrings__DefaultConnection
-    value: Server=localhost,1433;database=CleanArchitectureDb;User Id=sa;Password=Password_123;
+    value: Server=host.docker.internal,1433;database=CleanArchitectureDb;User Id=sa;Password=Password_123;
   - name: DataProtectionKeysConfig__Enabled
     value: true
   - name: DataProtectionKeysConfig__RedisServer
-    value: localhost,6379
+    value: host.docker.internal,6379
   - name: OpenTelemetryConfig__Enabled
     value: true
   - name: OpenTelemetryConfig__OtlpReceiverUri
-    value: http://localhost:4317
+    value: http://host.docker.internal:4317
   - name: Serilog__WriteTo__1__Name
     value: LokiHttp
   - name: Serilog__WriteTo__1__Args__serverUrl
-    value: http://localhost:3100
+    value: http://host.docker.internal:3100
+  - name: Serilog__WriteTo__2__Name
+    value: Seq
+  - name: Serilog__WriteTo__2__Args__serverUrl
+    value: http://host.docker.internal:5341
 
 - name: webapi-db
   image: mcr.microsoft.com/mssql/server
@@ -54,7 +60,7 @@ services:
   - port: 1433
     connectionString: Server=${host}:${port};Database=CleanArchitectureDb;MultipleActiveResultSets=true;User Id=sa;Password=${env:SA_PASSWORD}
 
-- name: webapi-redis
+- name: redis
   image: redis
   bindings:
   - port: 6379
@@ -62,20 +68,20 @@ services:
   - name: webapi-redis-storage
     target: /data
 
-- name: webapi-redis-commander
+- name: redis-commander
   image: rediscommander/redis-commander:latest
   bindings:
   - port: 8081
     protocol: http
   env:
   - name: REDIS_HOSTS
-    value: local:webapi-redis:6379
+    value: local:redis:6379
   - name: HTTP_USER
     value: root
   - name: HTTP_USER
     value: Password_123
 
-- name: webapi-loki
+- name: loki
   image: grafana/loki
   bindings:
   - port: 3100
@@ -83,7 +89,7 @@ services:
   - name: webapi-loki-storage
     target: /loki
 
-- name: webapi-grafana
+- name: grafana
   image: grafana/grafana
   bindings:
   - port: 3000
@@ -96,7 +102,7 @@ services:
   - name: webapi-grafana-storage
     target: /var/lib/grafana
 
-- name: webapi-jaeger
+- name: jaeger
   image: jaegertracing/opentelemetry-all-in-one:latest
   bindings:
   - port: 13133

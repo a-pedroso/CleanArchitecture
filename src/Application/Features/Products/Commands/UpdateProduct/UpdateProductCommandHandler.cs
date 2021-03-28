@@ -1,7 +1,6 @@
 ﻿namespace CleanArchitecture.Application.Features.Products.Commands.UpdateProduct
 {
     using CleanArchitecture.Application.Common.Exceptions;
-    using CleanArchitecture.Application.Common.Interfaces.Repositories;
     using CleanArchitecture.Application.Common.Wrappers;
     using CleanArchitecture.Domain.Entities;
     using MediatR;
@@ -15,19 +14,19 @@
         {
             _productRepository = productRepository;
         }
-        public async Task<Result<long>> Handle(UpdateProductCommand command, CancellationToken cancellationToken)
+        public async Task<Result<long>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            var product = await _productRepository.GetByIdAsync(command.Id);
+            var product = await _productRepository.GetByIdAsync(request.Id);
 
             if (product == null)
             {
-                throw new NotFoundException(nameof(Product), command.Id);
+                throw new NotFoundException(nameof(Product), request.Id);
             }
             else
             {
-                product.Name = command.Name;
-                product.Rate = command.Rate;
-                product.Description = command.Description;
+                product.Name = request.Name;
+                product.Rate = request.Rate;
+                product.Description = request.Description;
                 await _productRepository.UpdateAsync(product);
                 return Result.Ok(product.Id);
             }

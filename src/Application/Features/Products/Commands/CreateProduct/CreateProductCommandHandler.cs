@@ -14,14 +14,14 @@
             _productRepository = productRepository;
         }
 
-        public async Task<Result<long>> Handle(CreateProductCommand cmd, CancellationToken cancellationToken)
+        public async Task<Result<long>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var product = new Product()
             {
-                Name = cmd.Name,
-                Barcode = cmd.Barcode,
-                Description = cmd.Description,
-                Rate = cmd.Rate
+                Name = request.Name,
+                Barcode = request.Barcode,
+                Description = request.Description,
+                Rate = request.Rate
             };
             await _productRepository.AddAsync(product);
             return Result.Ok(product.Id);

@@ -57,6 +57,12 @@
                                 AuthorizationUrl = new Uri($"{oauthAuthority}/connect/authorize"),
                                 TokenUrl = new Uri($"{oauthAuthority}/connect/token"),
                                 Scopes = oauthScopes
+                            },
+                            AuthorizationCode = new OpenApiOAuthFlow
+                            {
+                                AuthorizationUrl = new Uri($"{oauthAuthority}/connect/authorize"),
+                                TokenUrl = new Uri($"{oauthAuthority}/connect/token"),
+                                Scopes = oauthScopes
                             }
                         }
                     });
@@ -81,8 +87,11 @@
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.OAuthClientId(configuration.GetValue<string>("Authentication:Swagger:Client"));
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", _apiName);
+
+                options.OAuthClientId(configuration.GetValue<string>("Authentication:Swagger:ClientId"));
+                options.OAuthClientSecret(configuration.GetValue<string>("Authentication:Swagger:ClientSecret"));
+                options.OAuthUsePkce();
             });
             app.UseReDoc(options => 
             {
