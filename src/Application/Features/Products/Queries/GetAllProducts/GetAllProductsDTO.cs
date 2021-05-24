@@ -2,24 +2,21 @@
 {
     using CleanArchitecture.Domain.Entities;
 
-    public record GetAllProductsDTO
+    public record GetAllProductsDTO(
+        long Id,
+        string Name,
+        string Barcode,
+        string Description,
+        decimal Rate)
     {
-        public long Id { get; init; }
-        public string Name { get; init; }
-        public string Barcode { get; init; }
-        public string Description { get; init; }
-        public decimal Rate { get; init; }
-
         public static GetAllProductsDTO ToDto(Product product)
         {
-            return new GetAllProductsDTO()
-            {
-                Id = product.Id,
-                Barcode = product.Barcode,
-                Description = product.Description,
-                Name = product.Name,
-                Rate = product.Rate
-            };
+            return new GetAllProductsDTO(
+                product.Id,
+                product.Barcode,
+                product.Description,
+                product.Name,
+                product.Rate);
         }
     }
 }

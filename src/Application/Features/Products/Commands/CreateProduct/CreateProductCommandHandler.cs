@@ -23,6 +23,7 @@
                 Description = request.Description,
                 Rate = request.Rate
             };
+
             await _productRepository.AddAsync(product);
             return Result.Ok(product.Id);
         }

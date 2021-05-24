@@ -130,4 +130,3 @@ services:
   - name: prometheus-configmap
     source: ./prometheus
     target: /etc/prometheus
-

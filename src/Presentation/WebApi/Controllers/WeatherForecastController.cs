@@ -31,5 +31,11 @@
             var result = await _mediator.Send(new GetWeatherForecastsQuery());
             return Ok(result);
         }
+
+        [HttpGet("Error")]
+        public IActionResult Error()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

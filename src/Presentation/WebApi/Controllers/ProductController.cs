@@ -37,7 +37,7 @@
             var qry = new GetAllProductsQuery()
             {
                 PageNumber = index + 1,
-                PageSize = size < 1 ? 10 : size > 1000 ? 1000 : size
+                PageSize = size < 1 ? 10 : (size > 1000 ? 1000 : size)
             };
 
             var response = await _mediator.Send(qry);

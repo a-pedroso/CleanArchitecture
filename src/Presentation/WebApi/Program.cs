@@ -44,7 +44,7 @@ namespace CleanArchitecture.WebApi
 
             Console.WriteLine("Enabling prometheus-net.DotNetStats...");
             DotNetRuntimeStatsBuilder.Customize()
-                .WithThreadPoolSchedulingStats()
+                //.WithThreadPoolSchedulingStats()
                 .WithContentionStats()
                 .WithGcStats()
                 .WithJitStats()

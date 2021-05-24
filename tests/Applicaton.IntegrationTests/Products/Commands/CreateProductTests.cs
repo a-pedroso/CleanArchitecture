@@ -2,6 +2,7 @@
 using CleanArchitecture.Application.Features.Products.Commands.CreateProduct;
 using CleanArchitecture.Domain.Entities;
 using FluentAssertions;
+using FluentValidation;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
