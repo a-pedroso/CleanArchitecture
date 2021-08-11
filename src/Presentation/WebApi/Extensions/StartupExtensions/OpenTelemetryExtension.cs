@@ -20,7 +20,6 @@
         {
             if (string.Equals(configuration["OpenTelemetryConfig:Enabled"], "true", StringComparison.OrdinalIgnoreCase))
             {
-                var otlpReceiverUri = configuration["OpenTelemetryConfig:OtlpReceiverUri"];
                 var redisServerUri = configuration["DataProtectionKeysConfig:RedisServer"];
 
                 using var connection = ConnectionMultiplexer.Connect(redisServerUri);
@@ -49,8 +48,12 @@
                                                 options.EnableConnectionLevelAttributes = true;
                                                 options.RecordException = true;
                                             })
-
-                                       .AddOtlpExporter(options => options.Endpoint = new Uri(otlpReceiverUri));
+                                       //.AddOtlpExporter(options => options.Endpoint = new Uri(otlpReceiverUri))
+                                       .AddJaegerExporter(o =>
+                                       {
+                                           o.AgentHost = "host.docker.internal";
+                                           o.AgentPort = 6831;
+                                       });
 
                                 if (webHostEnvironment.IsDevelopment())
                                 {

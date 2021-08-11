@@ -15,9 +15,7 @@ namespace CleanArchitecture.WebApi
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
     using Serilog;
-    using System;
 
     public class Startup
     {
@@ -46,6 +44,8 @@ namespace CleanArchitecture.WebApi
             services.AddControllers()
                     .AddProblemDetailsConventions();
 
+            services.AddRouting(options => options.LowercaseUrls = true);
+
             services.AddHttpContextAccessor();
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
@@ -66,8 +66,6 @@ namespace CleanArchitecture.WebApi
             app.UseForwardHeadersExtension(Configuration);
 
             app.UseSerilogRequestLogging();
-
-            //app.UseExceptionMiddlewareExtension();
 
             app.UseRouting();
             app.UseAuthentication();

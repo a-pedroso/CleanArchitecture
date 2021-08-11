@@ -103,22 +103,30 @@ services:
     target: /var/lib/grafana
 
 - name: jaeger
-  image: jaegertracing/opentelemetry-all-in-one:latest
+  #image: jaegertracing/opentelemetry-all-in-one:1.24
+  image: jaegertracing/all-in-one:1.24
+  env:
+  - name: COLLECTOR_ZIPKIN_HTTP_PORT
+    value: 9411
   bindings:
-  - port: 13133
-    containerPort: 13133
-    name: health-check
-    protocol: http
+  #- port: 13133
+  #  containerPort: 13133
+  #  name: health-check
+    #protocol: http
   - port: 16686
     containerPort: 16686
     name: jaeger-ui
     protocol: http
-  - port: 4317
-    containerPort: 55680
-    name: otmp-receiver
-  - port: 14268
-    containerPort: 14268
-    name: jaeger-collector
+  #- port: 4317
+  #  containerPort: 55680
+  #  name: otmp-receiver
+  #- port: 14268
+  #  containerPort: 14268
+  #  name: jaeger-collector
+  - port: 6831
+    containerPort: 6831
+    name: jaeger-receiver
+    protocol: udp
 
 - name: prometheus
   image: prom/prometheus
