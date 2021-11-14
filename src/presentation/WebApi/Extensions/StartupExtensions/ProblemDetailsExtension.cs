@@ -1,11 +1,11 @@
 ﻿namespace CleanArchitecture.WebApi.Extensions.StartupExtensions;
 
 using CleanArchitecture.Application.Common.Exceptions;
+using FluentValidation;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using System.ComponentModel.DataAnnotations;
 
 public static class ProblemDetailsExtension
 {
