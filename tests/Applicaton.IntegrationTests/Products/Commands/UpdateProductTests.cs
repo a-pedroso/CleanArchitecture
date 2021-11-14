@@ -20,7 +20,7 @@ namespace CleanArchitecture.Application.IntegrationTests.Products.Commands
             var command = new UpdateProductCommand();
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>();
+                SendAsync(command)).Should().ThrowAsync<ValidationException>();
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace CleanArchitecture.Application.IntegrationTests.Products.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace CleanArchitecture.Application.IntegrationTests.Products.Commands
             product.LastModifiedBy.Should().NotBeNull();
             product.LastModifiedBy.Should().Be(userId);
             product.LastModified.Should().NotBeNull();
-            product.LastModified.Should().BeCloseTo(DateTime.Now, 1000);
+            product.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1000));
         }
     }
 }

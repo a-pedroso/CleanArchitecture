@@ -19,7 +19,7 @@ namespace CleanArchitecture.Application.IntegrationTests.Products.Commands
             var command = new CreateProductCommand();
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>();
+                SendAsync(command)).Should().ThrowAsync<ValidationException>();
         }
 
         [Test]
@@ -41,8 +41,8 @@ namespace CleanArchitecture.Application.IntegrationTests.Products.Commands
                 Barcode = "12345"
             };
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>();
+            await FluentActions.Invoking(() =>
+                SendAsync(command)).Should().ThrowAsync<ValidationException>();
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace CleanArchitecture.Application.IntegrationTests.Products.Commands
             product.Description.Should().Be(command.Description);
             product.Barcode.Should().Be(command.Barcode);
             product.CreatedBy.Should().Be(userId);
-            product.Created.Should().BeCloseTo(DateTime.Now, 10000);
+            product.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(10000));
         }
     }
 }

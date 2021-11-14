@@ -17,7 +17,7 @@ namespace CleanArchitecture.Application.IntegrationTests.Products.Queries
             var command = new GetProductByIdQuery { Id = 99 };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]

@@ -30,11 +30,11 @@ services:
   - name: ConnectionStrings__DefaultConnection
     value: Server=host.docker.internal,1433;database=CleanArchitectureDb;User Id=sa;Password=Password_123;
   - name: DataProtectionKeysConfig__Enabled
-    value: true
+    value: false
   - name: DataProtectionKeysConfig__RedisServer
     value: host.docker.internal,6379
   - name: OpenTelemetryConfig__Enabled
-    value: true
+    value: false
   - name: OpenTelemetryConfig__OtlpReceiverUri
     value: http://host.docker.internal:4317
   - name: Serilog__WriteTo__1__Name
@@ -60,81 +60,81 @@ services:
   - port: 1433
     connectionString: Server=${host}:${port};Database=CleanArchitectureDb;MultipleActiveResultSets=true;User Id=sa;Password=${env:SA_PASSWORD}
 
-- name: redis
-  image: redis
-  bindings:
-  - port: 6379
-  volumes:
-  - name: webapi-redis-storage
-    target: /data
+#- name: redis
+#  image: redis
+#  bindings:
+#  - port: 6379
+#  volumes:
+#  - name: webapi-redis-storage
+#    target: /data
 
-- name: redis-commander
-  image: rediscommander/redis-commander:latest
-  bindings:
-  - port: 8081
-    protocol: http
-  env:
-  - name: REDIS_HOSTS
-    value: local:redis:6379
-  - name: HTTP_USER
-    value: root
-  - name: HTTP_USER
-    value: Password_123
+#- name: redis-commander
+#  image: rediscommander/redis-commander:latest
+#  bindings:
+#  - port: 8081
+#    protocol: http
+#  env:
+#  - name: REDIS_HOSTS
+#    value: local:redis:6379
+#  - name: HTTP_USER
+#    value: root
+#  - name: HTTP_USER
+#    value: Password_123
 
-- name: loki
-  image: grafana/loki
-  bindings:
-  - port: 3100
-  volumes:
-  - name: webapi-loki-storage
-    target: /loki
+#- name: loki
+#  image: grafana/loki
+#  bindings:
+#  - port: 3100
+#  volumes:
+#  - name: webapi-loki-storage
+#    target: /loki
 
-- name: grafana
-  image: grafana/grafana
-  bindings:
-  - port: 3000
-    containerPort: 3000
-    protocol: http
-  env:
-  - name: GF_INSTALL_PLUGINS
-    value: grafana-piechart-panel
-  volumes:
-  - name: webapi-grafana-storage
-    target: /var/lib/grafana
+#- name: grafana
+#  image: grafana/grafana
+#  bindings:
+#  - port: 3000
+#    containerPort: 3000
+#    protocol: http
+#  env:
+#  - name: GF_INSTALL_PLUGINS
+#    value: grafana-piechart-panel
+#  volumes:
+#  - name: webapi-grafana-storage
+#    target: /var/lib/grafana
 
-- name: jaeger
-  #image: jaegertracing/opentelemetry-all-in-one:1.24
-  image: jaegertracing/all-in-one:1.24
-  env:
-  - name: COLLECTOR_ZIPKIN_HTTP_PORT
-    value: 9411
-  bindings:
-  #- port: 13133
-  #  containerPort: 13133
-  #  name: health-check
-    #protocol: http
-  - port: 16686
-    containerPort: 16686
-    name: jaeger-ui
-    protocol: http
-  #- port: 4317
-  #  containerPort: 55680
-  #  name: otmp-receiver
-  #- port: 14268
-  #  containerPort: 14268
-  #  name: jaeger-collector
-  - port: 6831
-    containerPort: 6831
-    name: jaeger-receiver
-    protocol: udp
+#- name: jaeger
+#  #image: jaegertracing/opentelemetry-all-in-one:1.24
+#  image: jaegertracing/all-in-one:1.24
+#  env:
+#  - name: COLLECTOR_ZIPKIN_HTTP_PORT
+#    value: 9411
+#  bindings:
+#  #- port: 13133
+#  #  containerPort: 13133
+#  #  name: health-check
+#    #protocol: http
+#  - port: 16686
+#    containerPort: 16686
+#    name: jaeger-ui
+#    protocol: http
+#  #- port: 4317
+#  #  containerPort: 55680
+#  #  name: otmp-receiver
+#  #- port: 14268
+#  #  containerPort: 14268
+#  #  name: jaeger-collector
+#  - port: 6831
+#    containerPort: 6831
+#    name: jaeger-receiver
+#    protocol: udp
 
-- name: prometheus
-  image: prom/prometheus
-  bindings:
-  - port: 9090
-    containerPort: 9090
-    protocol: http
-  volumes:
-  - name: prometheus-configmap
-    source: ./prometheus
-    target: /etc/prometheus
+#- name: prometheus
+#  image: prom/prometheus
+#  bindings:
+#  - port: 9090
+#    containerPort: 9090
+#    protocol: http
+#  volumes:
+#  - name: prometheus-configmap
+#    source: ./prometheus
+#    target: /etc/prometheus

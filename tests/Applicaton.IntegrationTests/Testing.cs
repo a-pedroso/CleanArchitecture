@@ -39,13 +39,13 @@ public class Testing
             w.EnvironmentName == "Development" &&
             w.ApplicationName == "CleanArchitecture.WebApi"));
 
-        services.AddLogging();
+        //services.AddLogging();
 
-        var startup = new Startup(_configuration, Mock.Of<IWebHostEnvironment>(w =>
-                                                            w.EnvironmentName == "Development" &&
-                                                            w.ApplicationName == "CleanArchitecture.WebApi"));
+        //var startup = new Startup(_configuration, Mock.Of<IWebHostEnvironment>(w =>
+        //                                                    w.EnvironmentName == "Development" &&
+        //                                                    w.ApplicationName == "CleanArchitecture.WebApi"));
 
-        startup.ConfigureServices(services);
+        //startup.ConfigureServices(services);
 
         // Replace service registration for ICurrentUserService
         // Remove existing registration
