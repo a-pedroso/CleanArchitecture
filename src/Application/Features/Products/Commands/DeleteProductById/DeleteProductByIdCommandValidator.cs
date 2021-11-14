@@ -1,13 +1,12 @@
-﻿namespace CleanArchitecture.Application.Features.Products.Commands.DeleteProductById
-{
-    using FluentValidation;
+﻿namespace CleanArchitecture.Application.Features.Products.Commands.DeleteProductById;
 
-    public class DeleteProductByIdCommandValidator : AbstractValidator<DeleteProductByIdCommand>
+using FluentValidation;
+
+public class DeleteProductByIdCommandValidator : AbstractValidator<DeleteProductByIdCommand>
+{
+    public DeleteProductByIdCommandValidator()
     {
-        public DeleteProductByIdCommandValidator()
-        {
-            RuleFor(p => p.Id)
-                .GreaterThan(0);
-        }
+        RuleFor(p => p.Id)
+            .GreaterThan(0);
     }
 }

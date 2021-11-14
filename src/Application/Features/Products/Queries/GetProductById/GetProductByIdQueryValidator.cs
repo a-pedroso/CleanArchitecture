@@ -1,14 +1,13 @@
-﻿namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById
-{
-    using FluentValidation;
+﻿namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById;
 
-    public class GetProductByIdQueryValidator : AbstractValidator<GetProductByIdQuery>
+using FluentValidation;
+
+public class GetProductByIdQueryValidator : AbstractValidator<GetProductByIdQuery>
+{
+    public GetProductByIdQueryValidator()
     {
-        public GetProductByIdQueryValidator()
-        {
-            RuleFor(p => p.Id)
-                .GreaterThan(0)
-                    .WithMessage("{PropertyName} has to be greater than zero.");
-        }
+        RuleFor(p => p.Id)
+            .GreaterThan(0)
+                .WithMessage("{PropertyName} has to be greater than zero.");
     }
 }

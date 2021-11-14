@@ -30,7 +30,7 @@
 //        {
 //            _configuration.AssertConfigurationIsValid();
 //        }
-        
+
 //        [Test]
 //        [TestCase(typeof(Product), typeof(ProductDTO))]
 //        [TestCase(typeof(CreateProductCommand), typeof(Product))]

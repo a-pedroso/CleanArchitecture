@@ -1,33 +1,32 @@
-﻿namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById
+﻿namespace CleanArchitecture.Application.Features.Products.Queries.GetProductById;
+
+using CleanArchitecture.Application.Common.Exceptions;
+using CleanArchitecture.Application.Common.Wrappers;
+using CleanArchitecture.Domain.Entities;
+using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
+
+public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Result<GetProductByIdDTO>>
 {
-    using CleanArchitecture.Application.Common.Exceptions;
-    using CleanArchitecture.Application.Common.Wrappers;
-    using CleanArchitecture.Domain.Entities;
-    using MediatR;
-    using System.Threading;
-    using System.Threading.Tasks;
+    private readonly IProductRepository _productRepository;
 
-    public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Result<GetProductByIdDTO>>
+    public GetProductByIdQueryHandler(
+        IProductRepository productRepository)
     {
-        private readonly IProductRepository _productRepository;
+        _productRepository = productRepository;
+    }
 
-        public GetProductByIdQueryHandler(
-            IProductRepository productRepository)
+    public async Task<Result<GetProductByIdDTO>> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
+    {
+        var product = await _productRepository.GetByIdAsync(query.Id);
+        if (product == null)
         {
-            _productRepository = productRepository;
+            throw new NotFoundException(nameof(Product), query.Id);
         }
 
-        public async Task<Result<GetProductByIdDTO>> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
-        {
-            var product = await _productRepository.GetByIdAsync(query.Id);
-            if (product == null)
-            {
-                throw new NotFoundException(nameof(Product), query.Id);
-            }
+        var dto = GetProductByIdDTO.ToDto(product);
 
-            var dto = GetProductByIdDTO.ToDto(product);
-            
-            return Result.Ok(dto);
-        }
+        return Result.Ok(dto);
     }
 }

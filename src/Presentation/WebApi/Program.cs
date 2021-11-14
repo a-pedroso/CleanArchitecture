@@ -15,16 +15,16 @@ try
 
     // Add services to the container.
     builder.SetupServices();
- 
+
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
     app.SetupRequestPipeline();
 
-    await app.SetupMigrationsAsync();
+    await app.RunMigrationsAsync();
 
     Log.Information($"web api starting at {DateTime.UtcNow}");
-    
+
     app.Run();
 }
 catch (Exception ex)

@@ -1,7 +1,6 @@
-﻿namespace CleanArchitecture.Application.Common.Interfaces.Services
+﻿namespace CleanArchitecture.Application.Common.Interfaces.Services;
+
+public interface ICurrentUserService
 {
-    public interface ICurrentUserService
-    {
-        string UserId { get; }
-    }
+    string UserId { get; }
 }

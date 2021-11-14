@@ -1,34 +1,33 @@
-﻿namespace CleanArchitecture.Infrastructure.Persistence.Context.Configurations
+﻿namespace CleanArchitecture.Infrastructure.Persistence.Context.Configurations;
+
+using CleanArchitecture.Domain.Common;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+
+
+public class BaseAuditableEntityConfiguration<T, TKey> : IEntityTypeConfiguration<T>
+    where TKey : IEquatable<TKey>
+    where T : BaseAuditableEntity<TKey>
 {
-    using CleanArchitecture.Domain.Common;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using System;
-
-
-    public class BaseAuditableEntityConfiguration<T, TKey> : IEntityTypeConfiguration<T>
-        where TKey : IEquatable<TKey>
-        where T : BaseAuditableEntity<TKey>
+    public virtual void Configure(EntityTypeBuilder<T> builder)
     {
-        public virtual void Configure(EntityTypeBuilder<T> builder)
-        {
-            // IDENTITY
-            builder.HasKey(t => t.Id);
+        // IDENTITY
+        builder.HasKey(t => t.Id);
 
-            builder.Property(t => t.Id)
-                .ValueGeneratedOnAdd()
-                .IsRequired();
+        builder.Property(t => t.Id)
+            .ValueGeneratedOnAdd()
+            .IsRequired();
 
-            // AUDIT
-            builder.Property(t => t.Created)
-                .IsRequired();
+        // AUDIT
+        builder.Property(t => t.Created)
+            .IsRequired();
 
-            builder.Property(t => t.CreatedBy)
-                .HasMaxLength(255)
-                .IsRequired();
+        builder.Property(t => t.CreatedBy)
+            .HasMaxLength(255)
+            .IsRequired();
 
-            builder.Property(t => t.LastModifiedBy)
-                .HasMaxLength(255);
-        }
+        builder.Property(t => t.LastModifiedBy)
+            .HasMaxLength(255);
     }
 }

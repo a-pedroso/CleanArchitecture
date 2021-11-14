@@ -8,65 +8,64 @@ using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.IntegrationTests.Products.Commands
+namespace CleanArchitecture.Application.IntegrationTests.Products.Commands;
+
+using static Testing;
+
+public class UpdateProductTests : TestBase
 {
-    using static Testing;
-
-    public class UpdateProductTests : TestBase
+    [Test]
+    public void ShouldRequireMinimumFields()
     {
-        [Test]
-        public void ShouldRequireMinimumFields()
+        var command = new UpdateProductCommand();
+
+        FluentActions.Invoking(() =>
+            SendAsync(command)).Should().ThrowAsync<ValidationException>();
+    }
+
+    [Test]
+    public void ShouldRequireValidProductId()
+    {
+        var command = new UpdateProductCommand
         {
-            var command = new UpdateProductCommand();
+            Id = 99,
+            Name = "New Name",
+            Description = "New Desc"
+        };
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<ValidationException>();
-        }
+        FluentActions.Invoking(() =>
+            SendAsync(command)).Should().ThrowAsync<NotFoundException>();
+    }
 
-        [Test]
-        public void ShouldRequireValidProductId()
+    [Test]
+    public async Task ShouldUpdateProduct()
+    {
+        var userId = RunAsDefaultUserAsync();
+
+        var response = await SendAsync(new CreateProductCommand
         {
-            var command = new UpdateProductCommand
-            {
-                Id = 99,
-                Name = "New Name",
-                Description = "New Desc"
-            };
+            Name = "Product01",
+            Description = "Product01 desc",
+            Rate = 1,
+            Barcode = "p01"
+        });
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
-        }
-
-        [Test]
-        public async Task ShouldUpdateProduct()
+        var command = new UpdateProductCommand
         {
-            var userId = RunAsDefaultUserAsync();
+            Id = response.Data,
+            Name = "Updated Product Name",
+            Description = "Updated Desc"
+        };
 
-            var response = await SendAsync(new CreateProductCommand
-            {
-                Name = "Product01",
-                Description = "Product01 desc",
-                Rate = 1,
-                Barcode = "p01"
-            });
+        await SendAsync(command);
 
-            var command = new UpdateProductCommand
-            {
-                Id = response.Data,
-                Name = "Updated Product Name",
-                Description = "Updated Desc"
-            };
+        var product = await FindAsync<Product>(response.Data);
 
-            await SendAsync(command);
-
-            var product = await FindAsync<Product>(response.Data);
-
-            product.Name.Should().Be(command.Name);
-            product.Description.Should().Be(command.Description);
-            product.LastModifiedBy.Should().NotBeNull();
-            product.LastModifiedBy.Should().Be(userId);
-            product.LastModified.Should().NotBeNull();
-            product.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1000));
-        }
+        product.Name.Should().Be(command.Name);
+        product.Description.Should().Be(command.Description);
+        product.LastModifiedBy.Should().NotBeNull();
+        product.LastModifiedBy.Should().Be(userId);
+        product.LastModified.Should().NotBeNull();
+        product.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1000));
     }
 }

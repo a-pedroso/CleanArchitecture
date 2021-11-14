@@ -1,23 +1,22 @@
-﻿namespace CleanArchitecture.Infrastructure.Persistence.Repositories
+﻿namespace CleanArchitecture.Infrastructure.Persistence.Repositories;
+
+using CleanArchitecture.Application.Features.Products;
+using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Infrastructure.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+
+public class ProductRepository : GenericRepository<Product, long>, IProductRepository
 {
-    using CleanArchitecture.Application.Features.Products;
-    using CleanArchitecture.Domain.Entities;
-    using CleanArchitecture.Infrastructure.Persistence.Context;
-    using Microsoft.EntityFrameworkCore;
-    using System.Threading.Tasks;
+    private readonly DbSet<Product> _products;
 
-    public class ProductRepository : GenericRepository<Product, long>, IProductRepository
+    public ProductRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
-        private readonly DbSet<Product> _products;
+        _products = dbContext.Set<Product>();
+    }
 
-        public ProductRepository(ApplicationDbContext dbContext) : base(dbContext)
-        {
-            _products = dbContext.Set<Product>();
-        }
-
-        public async Task<bool> IsUniqueBarcodeAsync(string barcode)
-        {
-            return await _products.AllAsync(p => p.Barcode != barcode);
-        }
+    public async Task<bool> IsUniqueBarcodeAsync(string barcode)
+    {
+        return await _products.AllAsync(p => p.Barcode != barcode);
     }
 }

@@ -1,29 +1,28 @@
-﻿namespace CleanArchitecture.Application.Features.Products.Commands.DeleteProductById
+﻿namespace CleanArchitecture.Application.Features.Products.Commands.DeleteProductById;
+
+using CleanArchitecture.Application.Common.Exceptions;
+using CleanArchitecture.Application.Common.Wrappers;
+using CleanArchitecture.Domain.Entities;
+using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
+
+public class DeleteProductByIdCommandHandler : IRequestHandler<DeleteProductByIdCommand, Result<long>>
 {
-    using CleanArchitecture.Application.Common.Exceptions;
-    using CleanArchitecture.Application.Common.Wrappers;
-    using CleanArchitecture.Domain.Entities;
-    using MediatR;
-    using System.Threading;
-    using System.Threading.Tasks;
-
-    public class DeleteProductByIdCommandHandler : IRequestHandler<DeleteProductByIdCommand, Result<long>>
+    private readonly IProductRepository _productRepository;
+    public DeleteProductByIdCommandHandler(IProductRepository productRepository)
     {
-        private readonly IProductRepository _productRepository;
-        public DeleteProductByIdCommandHandler(IProductRepository productRepository)
+        _productRepository = productRepository;
+    }
+    public async Task<Result<long>> Handle(DeleteProductByIdCommand command, CancellationToken cancellationToken)
+    {
+        var product = await _productRepository.GetByIdAsync(command.Id);
+        if (product == null)
         {
-            _productRepository = productRepository;
+            throw new NotFoundException(nameof(Product), command.Id);
         }
-        public async Task<Result<long>> Handle(DeleteProductByIdCommand command, CancellationToken cancellationToken)
-        {
-            var product = await _productRepository.GetByIdAsync(command.Id);
-            if (product == null)
-            {
-                throw new NotFoundException(nameof(Product), command.Id);
-            }
 
-            await _productRepository.DeleteAsync(product);
-            return Result.Ok(product.Id);
-        }
+        await _productRepository.DeleteAsync(product);
+        return Result.Ok(product.Id);
     }
 }

@@ -1,15 +1,14 @@
-﻿namespace CleanArchitecture.Domain.Common
+﻿namespace CleanArchitecture.Domain.Common;
+
+using System;
+
+public interface IBaseAuditableEntity
 {
-    using System;
+    public string CreatedBy { get; set; }
 
-    public interface IBaseAuditableEntity
-    {
-        public string CreatedBy { get; set; }
+    public DateTime Created { get; set; }
 
-        public DateTime Created { get; set; }
+    public string LastModifiedBy { get; set; }
 
-        public string LastModifiedBy { get; set; }
-
-        public DateTime? LastModified { get; set; }
-    }
+    public DateTime? LastModified { get; set; }
 }

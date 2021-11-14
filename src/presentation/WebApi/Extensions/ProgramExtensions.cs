@@ -85,7 +85,7 @@ public static class ProgramExtensions
         app.MapControllers().RequireAuthorization();
     }
 
-    public static async Task SetupMigrationsAsync(this WebApplication app)
+    public static async Task RunMigrationsAsync(this WebApplication app)
     {
         if (app.Environment.IsDevelopment() &&
             app.Configuration.GetValue<bool>("RunEFCoreMigrations"))

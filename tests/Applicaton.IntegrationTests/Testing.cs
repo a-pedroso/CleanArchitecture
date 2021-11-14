@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 [SetUpFixture]
 public class Testing
-{   
+{
     private static IConfigurationRoot _configuration;
     private static IServiceScopeFactory _scopeFactory;
     private static Checkpoint _checkpoint;
@@ -58,10 +58,10 @@ public class Testing
         services.AddTransient<ICurrentUserService>(provider => currentUserServiceMock.Object);
 
         _scopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
-        
+
         _checkpoint = new Checkpoint
         {
-            TablesToIgnore = new [] { "__EFMigrationsHistory" }
+            TablesToIgnore = new[] { "__EFMigrationsHistory" }
         };
 
         EnsureDatabase();
