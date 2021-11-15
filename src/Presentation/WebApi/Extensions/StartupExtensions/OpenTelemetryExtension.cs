@@ -18,55 +18,72 @@ public static class OpenTelemetryExtension
         IConfiguration configuration,
         IWebHostEnvironment webHostEnvironment)
     {
-        if (string.Equals(configuration["OpenTelemetryConfig:Enabled"], "true", StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(configuration["OpenTelemetryConfig:Enabled"], "true", StringComparison.OrdinalIgnoreCase))
         {
-            var redisServerUri = configuration["DataProtectionKeysConfig:RedisServer"];
-
-            using var connection = ConnectionMultiplexer.Connect(redisServerUri);
-
-            _ = services.AddOpenTelemetryTracing(
-                        builder =>
-                        {
-                            _ = builder.SetResourceBuilder(ResourceBuilder
-                                   .CreateDefault()
-                                   .AddService(webHostEnvironment.ApplicationName))
-                                   .AddAspNetCoreInstrumentation((options) =>
-                                   {
-                                           // https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/src/OpenTelemetry.Instrumentation.AspNetCore#filter
-                                           // condition for allowable requests -> does not collect telemetry about the request if the Filter returns false or throws exception
-                                           options.Filter = (httpContext) =>
-                                       {
-                                           bool isMetricsOrHealth = ValidateIsMetricsOrHealthRequest(httpContext.Request.Path);
-                                           return !isMetricsOrHealth;
-                                       };
-                                   })
-                                   .AddHttpClientInstrumentation(options => options.SetHttpFlavor = true)
-                                   .AddRedisInstrumentation(connection, options => options.FlushInterval = TimeSpan.FromSeconds(5))
-                                   .AddSqlClientInstrumentation(options =>
-                                        {
-                                            options.SetDbStatementForText = true;
-                                            options.EnableConnectionLevelAttributes = true;
-                                            options.RecordException = true;
-                                        })
-                                   //.AddOtlpExporter(options => options.Endpoint = new Uri(otlpReceiverUri))
-                                   .AddJaegerExporter(o =>
-                                   {
-                                       o.AgentHost = "host.docker.internal";
-                                       o.AgentPort = 6831;
-                                   });
-
-                            if (webHostEnvironment.IsDevelopment())
-                            {
-                                builder.AddConsoleExporter(options => options.Targets = ConsoleExporterOutputTargets.Debug);
-                            }
-                        });
+            return services;
         }
 
-        return services;
+        string jaegerHost = configuration.GetValue<string>("OpenTelemetryConfig:JaegerExporter:AgentHost");
+        int jaegerPort = configuration.GetValue<int>("OpenTelemetryConfig:JaegerExporter:AgentPort");
+
+        return services.AddOpenTelemetryTracing(builder => builder
+                                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(webHostEnvironment.ApplicationName))
+                                .AddAspNetCoreInstrumentationExtension()
+                                .AddHttpClientInstrumentation(options => options.SetHttpFlavor = true)
+                                .AddRedisInstrumentationExtension(configuration)
+                                .AddSqlClientInstrumentation(options =>
+                                {
+                                    options.SetDbStatementForText = true;
+                                    options.EnableConnectionLevelAttributes = true;
+                                    options.RecordException = true;
+                                })
+                                .AddConsoleExporterExtension(webHostEnvironment)
+                                .AddJaegerExporter(o =>
+                                {
+                                    o.AgentHost = jaegerHost;
+                                    o.AgentPort = jaegerPort;
+                                }));
     }
 
-    private static bool ValidateIsMetricsOrHealthRequest(PathString path) =>
-        path.HasValue &&
-        (path.Value.StartsWith("/metrics", StringComparison.InvariantCultureIgnoreCase) ||
-         path.Value.StartsWith("/health", StringComparison.InvariantCultureIgnoreCase));
+    private static TracerProviderBuilder AddAspNetCoreInstrumentationExtension(this TracerProviderBuilder builder)
+    {
+        return builder.AddAspNetCoreInstrumentation((options) =>
+        {
+            // https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/src/OpenTelemetry.Instrumentation.AspNetCore#filter
+            // condition for allowable requests -> does not collect telemetry about the request if the Filter returns false or throws exception
+            options.Filter = (httpContext) =>
+            {
+                bool isMetricsOrHealth = ValidateIsMetricsOrHealthRequest(httpContext.Request.Path);
+                return !isMetricsOrHealth;
+            };
+        });
+
+        static bool ValidateIsMetricsOrHealthRequest(PathString path) =>
+            path.HasValue &&
+            (path.Value.StartsWith("/metrics", StringComparison.InvariantCultureIgnoreCase) ||
+             path.Value.StartsWith("/health", StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    private static TracerProviderBuilder AddRedisInstrumentationExtension(this TracerProviderBuilder builder, IConfiguration configuration)
+    {
+        if (string.Equals(configuration["DataProtectionKeysConfig:Enabled"], "true", StringComparison.OrdinalIgnoreCase))
+        {
+            var redisServerUri = configuration.GetValue<string>("DataProtectionKeysConfig:RedisServer");
+            using var connection = ConnectionMultiplexer.Connect(redisServerUri);
+
+            builder.AddRedisInstrumentation(connection, options => options.FlushInterval = TimeSpan.FromSeconds(5));
+        }
+
+        return builder;
+    }
+
+    private static TracerProviderBuilder AddConsoleExporterExtension(this TracerProviderBuilder builder, IWebHostEnvironment webHostEnvironment)
+    {
+        if (webHostEnvironment.IsDevelopment())
+        {
+            builder.AddConsoleExporter(options => options.Targets = ConsoleExporterOutputTargets.Debug);
+        }
+
+        return builder;
+    }
 }

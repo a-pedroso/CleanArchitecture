@@ -8,7 +8,7 @@ public class CurrentUserService : ICurrentUserService
 {
     public CurrentUserService(IHttpContextAccessor httpContextAccessor)
     {
-        UserId = httpContextAccessor.HttpContext?.User?.Claims.FirstOrDefault(c => c.Type == "client_id").Value
+        UserId = httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(c => c.Type == "sub_id")?.Value
                  ?? "anonymous";
     }
 

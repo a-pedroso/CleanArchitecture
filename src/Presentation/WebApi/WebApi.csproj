@@ -54,7 +54,7 @@
 		<PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
 		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
-		<PackageReference Include="Serilog.Sinks.Loki" Version="4.0.0-beta3" />
+		<PackageReference Include="Serilog.Sinks.Loki" Version="2.2.0" />
 		<PackageReference Include="Serilog.Sinks.Seq" Version="5.1.0" />
 		<PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
 		<PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
