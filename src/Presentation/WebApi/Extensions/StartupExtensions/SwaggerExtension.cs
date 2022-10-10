@@ -88,7 +88,6 @@ public static class SwaggerExtension
             options.SwaggerEndpoint("/swagger/v1/swagger.json", _apiName);
 
             options.OAuthClientId(configuration.GetValue<string>("Authentication:Swagger:ClientId"));
-            options.OAuthClientSecret(configuration.GetValue<string>("Authentication:Swagger:ClientSecret"));
             options.OAuthScopes("profile", "openid");
 
             // https://community.auth0.com/t/working-spa-randomly-fails-to-get-a-valid-accesstoken/27317
