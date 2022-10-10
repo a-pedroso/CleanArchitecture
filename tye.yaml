@@ -24,21 +24,21 @@ services:
   replicas: 1
   env:
   - name: UseInMemoryDatabase
-    value: false
+    value: "false"
   - name: RunEFCoreMigrations
-    value: true
+    value: "true"
   - name: ConnectionStrings__DefaultConnection
     value: Server=host.docker.internal,1433;database=CleanArchitectureDb;User Id=sa;Password=Password_123;
   - name: DataProtectionKeysConfig__Enabled
-    value: true
+    value: "true"
   - name: DataProtectionKeysConfig__RedisServer
     value: host.docker.internal,6379
   - name: OpenTelemetryConfig__Enabled
-    value: true
+    value: "true"
   - name: OpenTelemetryConfig__JaegerExporter__AgentHost
     value: localhost
   - name: OpenTelemetryConfig__JaegerExporter__AgentPort
-    value: 6831
+    value: "6831"
   - name: Serilog__WriteTo__1__Name
     value: LokiHttp
   - name: Serilog__WriteTo__1__Args__serverUrl
@@ -52,7 +52,7 @@ services:
   image: mcr.microsoft.com/mssql/server
   env:
   - name: ACCEPT_EULA
-    value: Y
+    value: "Y"
   - name: SA_PASSWORD
     value: Password_123
   volumes:
@@ -110,7 +110,7 @@ services:
   image: jaegertracing/all-in-one:1.24
   env:
   - name: COLLECTOR_ZIPKIN_HTTP_PORT
-    value: 9411
+    value: "9411"
   bindings:
   - port: 16686
     containerPort: 16686

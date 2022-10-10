@@ -7,7 +7,8 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
+    where TRequest : IRequest<TResponse>
 {
     private readonly Stopwatch _timer;
     private readonly ILogger<TRequest> _logger;
@@ -23,7 +24,7 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
         _currentUserService = currentUserService;
     }
 
-    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         _timer.Start();
 

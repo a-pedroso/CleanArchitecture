@@ -27,6 +27,11 @@ tye run
 * Prometheus-net
 * OpenTelemetry
 * Project Tye
+* Auth0
+
+## Auth0 user
+username: user@clean.arch
+password: Password.123
 
 ## License
 

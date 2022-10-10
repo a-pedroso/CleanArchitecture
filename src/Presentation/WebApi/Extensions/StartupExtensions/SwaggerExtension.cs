@@ -18,6 +18,8 @@ public static class SwaggerExtension
     public static IServiceCollection AddSwaggerExtension(this IServiceCollection services, IConfiguration configuration)
     {
         var oauthAuthority = configuration.GetValue<string>("Authentication:Jwt:Authority");
+        var oauthAuthorizationUrlPath = configuration.GetValue<string>("Authentication:Jwt:AuthorizationUrlPath");
+        var oauthTokenUrlPath = configuration.GetValue<string>("Authentication:Jwt:TokenUrlPath");
         var oauthDefinition = "oauth2";
         var oauthScopes = new Dictionary<string, string>
             {
@@ -40,8 +42,8 @@ public static class SwaggerExtension
                     }
                 });
 
-                // Set the comments path for the Swagger JSON and UI - previously generated XML - csproj XML -> GenerateDocumentationFile
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            // Set the comments path for the Swagger JSON and UI - previously generated XML - csproj XML -> GenerateDocumentationFile
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             options.IncludeXmlComments(xmlPath);
 
@@ -52,16 +54,10 @@ public static class SwaggerExtension
                     Type = SecuritySchemeType.OAuth2,
                     Flows = new OpenApiOAuthFlows
                     {
-                        ClientCredentials = new OpenApiOAuthFlow
-                        {
-                            AuthorizationUrl = new Uri($"{oauthAuthority}/connect/authorize"),
-                            TokenUrl = new Uri($"{oauthAuthority}/connect/token"),
-                            Scopes = oauthScopes
-                        },
                         AuthorizationCode = new OpenApiOAuthFlow
                         {
-                            AuthorizationUrl = new Uri($"{oauthAuthority}/connect/authorize"),
-                            TokenUrl = new Uri($"{oauthAuthority}/connect/token"),
+                            AuthorizationUrl = new Uri($"{oauthAuthority}{oauthAuthorizationUrlPath}"),
+                            TokenUrl = new Uri($"{oauthAuthority}{oauthTokenUrlPath}"),
                             Scopes = oauthScopes
                         }
                     }
@@ -84,6 +80,8 @@ public static class SwaggerExtension
 
     public static IApplicationBuilder UseSwaggerExtension(this IApplicationBuilder app, IConfiguration configuration)
     {
+        var oauthAudience = configuration.GetValue<string>("Authentication:Jwt:Audience");
+
         app.UseSwagger();
         app.UseSwaggerUI(options =>
         {
@@ -91,6 +89,13 @@ public static class SwaggerExtension
 
             options.OAuthClientId(configuration.GetValue<string>("Authentication:Swagger:ClientId"));
             options.OAuthClientSecret(configuration.GetValue<string>("Authentication:Swagger:ClientSecret"));
+            options.OAuthScopes("profile", "openid");
+
+            // https://community.auth0.com/t/working-spa-randomly-fails-to-get-a-valid-accesstoken/27317
+            options.OAuthAdditionalQueryStringParams(new Dictionary<string, string>() {
+                { "audience", oauthAudience }
+            });
+
             options.OAuthUsePkce();
         });
         app.UseReDoc(options =>
